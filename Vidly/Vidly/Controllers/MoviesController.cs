@@ -16,8 +16,8 @@ namespace Vidly.Controllers
         {
             var movies = new List<Movie>
             {
-                new Movie {Name = "Matrix 1", id=1},
-                new Movie {Name = "Matrix 2", id=2}
+                new Movie {Name = "Matrix 1", Id=1},
+                new Movie {Name = "Matrix 2", Id=2}
             };
             var viewModel = new ListMovieViewModel
             {
@@ -26,15 +26,15 @@ namespace Vidly.Controllers
             return View(viewModel);
         }
 
-        [Route("Movies/{id:int}")]
-        public ActionResult Movie(int id)
+        [Route("Movies/{Id:int}")]
+        public ActionResult Movie(int Id)
         {
             var movies = new List<Movie>
             {
-                new Movie {Name = "Matrix 1", id=1},
-                new Movie {Name = "Matrix 2", id=2}
+                new Movie {Name = "Matrix 1", Id=1},
+                new Movie {Name = "Matrix 2", Id=2}
             };
-            var foundMovie = movies.Find(movie => movie.id == id);
+            var foundMovie = movies.Find(movie => movie.Id == Id);
 
             //devolver vista de error
             if (foundMovie == null)
