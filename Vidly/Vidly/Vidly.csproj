@@ -190,6 +190,14 @@
     <Compile Include="Migrations\202202152254367_AddMovieDbSet.Designer.cs">
       <DependentUpon>202202152254367_AddMovieDbSet.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202152305217_AddNameToMembershipType.cs" />
+    <Compile Include="Migrations\202202152305217_AddNameToMembershipType.Designer.cs">
+      <DependentUpon>202202152305217_AddNameToMembershipType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202152307565_PopulateMemebrshipTypeName.cs" />
+    <Compile Include="Migrations\202202152307565_PopulateMemebrshipTypeName.Designer.cs">
+      <DependentUpon>202202152307565_PopulateMemebrshipTypeName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -292,6 +300,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202152254367_AddMovieDbSet.resx">
       <DependentUpon>202202152254367_AddMovieDbSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202152305217_AddNameToMembershipType.resx">
+      <DependentUpon>202202152305217_AddNameToMembershipType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202152307565_PopulateMemebrshipTypeName.resx">
+      <DependentUpon>202202152307565_PopulateMemebrshipTypeName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -8,6 +8,6 @@
     @foreach (var customer in Model.Customers)
     {
         
-        <li> <a href="Customers/@customer.Id"> <p>@customer.Name</p> <p>@customer.MembershipType.DiscountRate%</p></a> </li>
+        <li> <a href="Customers/@customer.Id"> <p>@customer.Name</p> <p>@customer.MembershipType.Name</p></a> </li>
     }
 </ul>

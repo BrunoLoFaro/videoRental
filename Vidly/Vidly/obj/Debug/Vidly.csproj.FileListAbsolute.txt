@@ -60,3 +60,5 @@ C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.Migrations.AddMem
 C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.Migrations.SeedMembershipTypes.resources
 C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.Migrations.ApplyAnnotationsToCustomerName.resources
 C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.Migrations.AddMovieDbSet.resources
+C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.Migrations.AddNameToMembershipType.resources
+C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.Migrations.PopulateMemebrshipTypeName.resources
