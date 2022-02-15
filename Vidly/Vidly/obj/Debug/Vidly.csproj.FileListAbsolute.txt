@@ -55,3 +55,7 @@ C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.dll
 C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.pdb
 C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.Migrations.InitialModel.resources
 C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.csproj.GenerateResource.Cache
+C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.Migrations.AddIsSubscribedToCustomer.resources
+C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.Migrations.AddMembershipType.resources
+C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.Migrations.SeedMembershipTypes.resources
+C:\Users\Bruno\Desktop\videoRental\Vidly\Vidly\obj\Debug\Vidly.Migrations.ApplyAnnotationsToCustomerName.resources

@@ -10,14 +10,20 @@ namespace Vidly.Controllers
 {
     public class CustomersController : Controller
     {
+        private ApplicationDbContext _context;
+        public CustomersController()
+        {
+            _context = new ApplicationDbContext();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }   
+
         [Route("Customers")]
         public ViewResult Index()
         {
-            var customers = new List<Customer>
-            {
-                new Customer {Name = "Agent Smith", Id=1},
-                new Customer {Name = "Neo", Id=2}
-            };
+            var customers = _context.Customers.ToList();
             var viewModel = new ListCustomerViewModel
             {
                 Customers = customers,
@@ -28,12 +34,7 @@ namespace Vidly.Controllers
         [Route("Customers/{Id:int}")]
         public ActionResult Customer(int Id)
         {
-            var customers = new List<Customer>
-            {
-                new Customer {Name = "Agent Smith", Id=1},
-                new Customer {Name = "Neo", Id=2}
-            };
-            var foundCustomer = customers.Find(customer => customer.Id == Id);
+            var foundCustomer = _context.Customers.SingleOrDefault(c => c.Id == Id);
 
             //devolver vista de error
             if (foundCustomer == null)
