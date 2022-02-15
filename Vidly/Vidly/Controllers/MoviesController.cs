@@ -12,12 +12,12 @@ namespace Vidly.Controllers
     {
 
         [Route("Movies")]
-        public ActionResult Index()
+        public ViewResult Index()
         {
             var movies = new List<Movie>
             {
-                new Movie {Name = "Movie 1"},
-                new Movie {Name = "Movie 2"}
+                new Movie {Name = "Matrix 1", id=1},
+                new Movie {Name = "Matrix 2", id=2}
             };
             var viewModel = new ListMovieViewModel
             {
@@ -27,33 +27,21 @@ namespace Vidly.Controllers
         }
 
         [Route("Movies/{id:int}")]
-        public ActionResult Enum(int id)
+        public ActionResult Movie(int id)
         {
-            return Content("id"+id);
+            var movies = new List<Movie>
+            {
+                new Movie {Name = "Matrix 1", id=1},
+                new Movie {Name = "Matrix 2", id=2}
+            };
+            var foundMovie = movies.Find(movie => movie.id == id);
+
+            //devolver vista de error
+            if (foundMovie == null)
+                return HttpNotFound();
+
+            return View(foundMovie);
         }
 
-        //viewModel ex
-        [Route("Movies/Random")]
-        public ActionResult Random()
-        {
-            var movie = new Movie() {Name = "Shrek"};
-            var customers = new List<Customer>
-            {
-                new Customer {Name = "Customer 1"},
-                new Customer {Name = "Customer 2"}
-            };
-            var viewModel = new RandomMovieViewModel
-            {
-                Movie = movie,
-                Customers = customers
-            };
-            return View(viewModel);
-        }
-        //constraint ex
-        [Route("movies/released/{year}/{month:regex(\\d{4}):range(1,12)}")]
-        public ActionResult ByReleaseDate(int year, int month)
-        {
-            return Content(year+"/"+month);
-        }
     }
 }

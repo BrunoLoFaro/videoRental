@@ -7,7 +7,7 @@
 <ul>
     @foreach (var movie in Model.Movies)
     {
-        <li>@movie.Name</li>
+        <li> <a href="Movies/@movie.id"> <p>@movie.Name</p> </a> </li>
     }
 </ul>
 
