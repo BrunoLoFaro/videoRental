@@ -10,15 +10,20 @@ namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
+        private ApplicationDbContext _context;
+        public MoviesController()
+        {
+            _context = new ApplicationDbContext();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }   
 
         [Route("Movies")]
         public ViewResult Index()
         {
-            var movies = new List<Movie>
-            {
-                new Movie {Name = "Matrix 1", Id=1},
-                new Movie {Name = "Matrix 2", Id=2}
-            };
+            var movies = _context.Movies.ToList();
             var viewModel = new ListMovieViewModel
             {
                 Movies = movies,
@@ -29,12 +34,7 @@ namespace Vidly.Controllers
         [Route("Movies/{Id:int}")]
         public ActionResult Movie(int Id)
         {
-            var movies = new List<Movie>
-            {
-                new Movie {Name = "Matrix 1", Id=1},
-                new Movie {Name = "Matrix 2", Id=2}
-            };
-            var foundMovie = movies.Find(movie => movie.Id == Id);
+            var foundMovie = _context.Movies.SingleOrDefault(c => c.Id == Id);
 
             //devolver vista de error
             if (foundMovie == null)
