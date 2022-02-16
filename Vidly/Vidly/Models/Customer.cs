@@ -12,6 +12,8 @@ namespace Vidly.Models
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]//?
+        public System.Nullable<DateTime> BirthDate { get; set; }
         public bool IsSuscribedToNewsLetter { get; set; }
         public MembershipType MembershipType { get; set; }
         public byte MembershipTypeId { get; set; }
