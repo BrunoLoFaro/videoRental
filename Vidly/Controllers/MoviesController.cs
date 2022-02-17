@@ -39,24 +39,23 @@ namespace Vidly.Controllers
 
         }
 
-
-        // GET: Movies/Random
-        public ActionResult Random()
+        public ActionResult NewMovie()
         {
-            var movie = new Movie() { Name = "Shrek!" };
-            var customers = new List<Customer>
-            {
-                new Customer { Name = "Customer 1" },
-                new Customer { Name = "Customer 2" }
-            };
+            var genres = _context.Genres.ToList();
 
-            var viewModel = new RandomMovieViewModel
+            var viewModel = new NewMovieViewModel
             {
-                Movie = movie,
-                Customers = customers
+                Genres = genres
             };
-
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult CreateNewMovie(Movie movie)
+        {
+            _context.Movies.Add(movie);
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Movies");
         }
     }
 }
