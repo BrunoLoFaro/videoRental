@@ -50,6 +50,14 @@ namespace Vidly.Controllers
 
         public ActionResult CreateNewCustomer(Customer customer)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new NewCustomerViewModel
+                {
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+                return View("NewCustomer", viewModel);
+            }
             _context.Customers.Add(customer);
             _context.SaveChanges();
             return RedirectToAction("Index", "Customers");
