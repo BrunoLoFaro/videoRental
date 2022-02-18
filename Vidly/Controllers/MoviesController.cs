@@ -59,7 +59,7 @@ namespace Vidly.Controllers
                 {
                     Genres = _context.Genres.ToList()
                 };
-                return View("MovieForm", viewModel);
+                return View("NewMovie", viewModel);
             }
             _context.Movies.Add(movie);
             _context.SaveChanges();
