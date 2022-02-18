@@ -3,13 +3,13 @@
     ViewBag.Title = "NewMovie";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h2>New Movie</h2>
-@using (Html.BeginForm("CreateNewMovie", "Movies"))
+@using (Html.BeginForm("NewMovie", "Movies"))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.Name)
         @Html.TextBoxFor(m => m.Movie.Name)
+        @Html.ValidationMessageFor(m => m.Movie.Name)
     </div>
     
     <div class="form-group">
@@ -34,3 +34,7 @@
 <button type="submit" class="btn btn-primary">Save</button>
 }
 
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

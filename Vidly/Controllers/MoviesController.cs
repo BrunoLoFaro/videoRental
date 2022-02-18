@@ -53,6 +53,14 @@ namespace Vidly.Controllers
         [HttpPost]
         public ActionResult CreateNewMovie(Movie movie)
         {
+            if(!ModelState.IsValid)
+            {
+                var viewModel = new NewMovieViewModel
+                {
+                    Genres = _context.Genres.ToList()
+                };
+                return View("MovieForm", viewModel);
+            }
             _context.Movies.Add(movie);
             _context.SaveChanges();
             return RedirectToAction("Index", "Movies");
