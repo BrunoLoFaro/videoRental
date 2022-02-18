@@ -20,7 +20,7 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.DateAdded)
-        @Html.TextBoxFor(m => m.Movie.DateAdded)
+        @Html.TextBoxFor(m => m.Movie.DateAdded@*, new { @class = "form-control"}*@)
         @Html.ValidationMessageFor(m => m.Movie.DateAdded)
     </div>
     
