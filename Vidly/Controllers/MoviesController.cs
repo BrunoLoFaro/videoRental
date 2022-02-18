@@ -38,7 +38,7 @@ namespace Vidly.Controllers
             return View(movie);
 
         }
-
+        [Authorize(Roles= "CanManageMovies")]
         public ActionResult NewMovie()
         {
             var genres = _context.Genres.ToList();
