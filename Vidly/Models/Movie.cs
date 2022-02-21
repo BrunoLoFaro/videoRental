@@ -8,7 +8,7 @@ namespace Vidly.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage="Poné bien el nombre")]
         [StringLength(255)]
         public string Name { get; set; }
 

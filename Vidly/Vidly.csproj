@@ -216,6 +216,10 @@
     <Compile Include="Migrations\202202181816209_SeedUsers.Designer.cs">
       <DependentUpon>202202181816209_SeedUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202181845135_AddPropsToAppUser.cs" />
+    <Compile Include="Migrations\202202181845135_AddPropsToAppUser.Designer.cs">
+      <DependentUpon>202202181845135_AddPropsToAppUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -224,6 +228,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\NewCustomerViewModel.cs" />
@@ -342,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202181816209_SeedUsers.resx">
       <DependentUpon>202202181816209_SeedUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202181845135_AddPropsToAppUser.resx">
+      <DependentUpon>202202181845135_AddPropsToAppUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
