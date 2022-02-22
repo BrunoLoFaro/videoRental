@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Add Movie", "NewMovie", "Movies", null, new { @class = "btn btn-primary" })
 </p>
-<table class="table table-bordered table-hover">
+<table id="Movies" class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Movie</th>
@@ -26,3 +26,11 @@
         }
     </tbody>
 </table>
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $("#Movies").DataTable();
+        })
+    </script>
+}

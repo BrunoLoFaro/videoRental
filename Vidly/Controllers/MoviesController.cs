@@ -38,8 +38,8 @@ namespace Vidly.Controllers
                 return HttpNotFound();
 
             return View(movie);
-
         }
+
         [Authorize(Roles= RoleName.CanManageMovies)]
         public ActionResult NewMovie()
         {
@@ -53,7 +53,6 @@ namespace Vidly.Controllers
         }
 
         [Authorize(Roles = RoleName.CanManageMovies)]
-
         public ViewResult Edit(int id)
         {
 
