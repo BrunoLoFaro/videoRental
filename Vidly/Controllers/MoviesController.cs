@@ -76,7 +76,7 @@ namespace Vidly.Controllers
                 };
                 return View("NewMovie", viewModel);
             }
-            if(movie.Id == 0)
+            if(movie.Id == 0)//or null?
                 _context.Movies.Add(movie);
             else
             {
