@@ -493,11 +493,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Movies\Random.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
-    <Content Include="Views\Customers1\Create.cshtml" />
-    <Content Include="Views\Customers1\Delete.cshtml" />
-    <Content Include="Views\Customers1\Details.cshtml" />
-    <Content Include="Views\Customers1\Edit.cshtml" />
-    <Content Include="Views\Customers1\Index.cshtml" />
     <None Include="Views\Customers\Details.cshtml" />
     <None Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Movies\Details.cshtml" />
