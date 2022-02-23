@@ -490,16 +490,12 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Movies\Random.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <None Include="Views\Customers\Details.cshtml" />
-    <None Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Movies\Details.cshtml" />
-    <Content Include="Views\Customers\NewCustomer.cshtml" />
     <Content Include="Views\Movies\IndexAdmin.cshtml" />
     <None Include="Views\Movies\Index.cshtml" />
     <Content Include="Views\Movies\MovieForm.cshtml" />
-    <Content Include="Views\Movies\Save.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
