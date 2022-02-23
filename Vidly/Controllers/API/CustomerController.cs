@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using System.Web.Http;
 using AutoMapper;
-using Microsoft.Owin.Security.Provider;
 using Vidly.DTOs;
 using Vidly.Models;
 
@@ -19,13 +17,13 @@ namespace Vidly.Controllers.API
             _context = new ApplicationDbContext();
         }
 
-        [System.Web.Mvc.HttpGet]
+        [HttpGet]
         public IEnumerable<CustomerDTO> GetCustomers()
         {
             return _context.Customers.ToList().Select(Mapper.Map<Customer,CustomerDTO>);
         }
 
-        [System.Web.Mvc.HttpGet]
+        [HttpGet]
         public IHttpActionResult GetCustomer(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
@@ -34,7 +32,7 @@ namespace Vidly.Controllers.API
             return Ok(Mapper.Map<Customer, CustomerDTO>(customer));
         }
 
-        [System.Web.Mvc.HttpPost]
+        [HttpPost]
         public IHttpActionResult CreateCustomer(CustomerDTO customerDto)
         {
             if (!ModelState.IsValid)

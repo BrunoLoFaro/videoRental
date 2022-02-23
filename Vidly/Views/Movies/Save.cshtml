@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2>New Movie</h2>
-@using (Html.BeginForm("Edit", "Movies"))
+@using (Html.BeginForm("Save", "Movies"))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.Name)
@@ -36,7 +36,7 @@
         @Html.ValidationMessageFor(m => m.Movie.NumberInStock)
     </div>
     @Html.HiddenFor(m=> m.Movie.Id)
-    <button type="submit" class="btn btn-primary">Save</button>
+<button type="submit" class="btn btn-primary">Save</button>
 }
 
 @section scripts
