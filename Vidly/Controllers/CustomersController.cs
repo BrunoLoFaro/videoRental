@@ -9,6 +9,7 @@ using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
+    [Authorize(Roles = RoleName.CanManageCustomers)]
     public class CustomersController : Controller
     {
         private ApplicationDbContext _context;
@@ -26,7 +27,7 @@ namespace Vidly.Controllers
         public ViewResult Index()
         {
             var customers = _context.Customers.Include(m => m.MembershipType).ToList();
-            if (User.IsInRole(("CanManageCustomers")))
+            if(User.IsInRole(("CanManageCustomers")))
                 return View("IndexAdmin", customers);
             return View("Index", customers);
         }
@@ -41,7 +42,6 @@ namespace Vidly.Controllers
             return View(customer);
         }
 
-       [Authorize(Roles= RoleName.CanManageCustomers)]
         public ActionResult NewCustomer()
         {
             var genres = _context.MembershipTypes.ToList();
@@ -53,7 +53,6 @@ namespace Vidly.Controllers
             return View("CustomerForm",viewModel);
         }
         
-        [Authorize(Roles = RoleName.CanManageCustomers)]
         public ViewResult Save(int id)
         {
             var customer = _context.Customers.Single(m => m.Id == id);
@@ -65,7 +64,6 @@ namespace Vidly.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = RoleName.CanManageCustomers)]
         public ActionResult Delete(int id)
         {
             var customerInDb = _context.Customers.Single(m => m.Id == id);
@@ -75,7 +73,6 @@ namespace Vidly.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = RoleName.CanManageCustomers)]
         public ActionResult Save(Customer customer)
         {
             if(!ModelState.IsValid)

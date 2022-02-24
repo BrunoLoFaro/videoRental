@@ -10,6 +10,7 @@ using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
+    [Authorize(Roles = RoleName.CanManageMovies)]
     public class MoviesController : Controller
     {
         private ApplicationDbContext _context;
@@ -23,7 +24,7 @@ namespace Vidly.Controllers
         {
             _context.Dispose();
         }
-
+        [AllowAnonymous]
         public ViewResult Index()
         {
             var movies = _context.Movies.Include(m => m.Genre).ToList();
@@ -31,7 +32,7 @@ namespace Vidly.Controllers
                 return View("IndexAdmin", movies);
             return View("Index", movies);
         }
-
+        [AllowAnonymous]
         public ActionResult Details(int id)
         {
             var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => m.Id == id);
@@ -42,7 +43,6 @@ namespace Vidly.Controllers
             return View(movie);
         }
 
-       [Authorize(Roles= RoleName.CanManageMovies)]
         public ActionResult NewMovie()
         {
             var genres = _context.Genres.ToList();
@@ -54,7 +54,6 @@ namespace Vidly.Controllers
             return View("MovieForm",viewModel);
         }
         
-        [Authorize(Roles = RoleName.CanManageMovies)]
         public ViewResult Save(int id)
         {
             var movie = _context.Movies.Single(m => m.Id == id);
@@ -65,7 +64,6 @@ namespace Vidly.Controllers
             return View("MovieForm",viewModel);
         }
 
-        [Authorize(Roles = RoleName.CanManageMovies)]
         [HttpDelete]
         public ActionResult Delete(int id)
         {
@@ -74,7 +72,6 @@ namespace Vidly.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index", "Movies");
         }
-        [Authorize(Roles = RoleName.CanManageMovies)]
         [HttpPost]
         public ActionResult Save(Movie movie)
         {
