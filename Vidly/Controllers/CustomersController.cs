@@ -64,7 +64,8 @@ namespace Vidly.Controllers
             return View("CustomerForm",viewModel);
         }
 
-        //http delete
+        [HttpDelete]
+        [Authorize(Roles = RoleName.CanManageCustomers)]
         public ActionResult Delete(int id)
         {
             var customerInDb = _context.Customers.Single(m => m.Id == id);
@@ -74,11 +75,11 @@ namespace Vidly.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = RoleName.CanManageCustomers)]
         public ActionResult Save(Customer customer)
         {
             if(!ModelState.IsValid)
             {
-                Trace.WriteLine("El modelo no era valido" + customer);
                 var viewModel = new NewCustomerViewModel(customer)
                 {
                     MembershipTypes = _context.MembershipTypes.ToList()
@@ -86,10 +87,8 @@ namespace Vidly.Controllers
                 return View("CustomerForm", viewModel);
             }
 
-            Trace.WriteLine("pasó la validation");
             if(customer.Id == 0){
                 _context.Customers.Add(customer);
-                Trace.WriteLine("guardada");
             }
             else
             {

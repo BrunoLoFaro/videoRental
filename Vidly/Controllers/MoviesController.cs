@@ -65,7 +65,8 @@ namespace Vidly.Controllers
             return View("MovieForm",viewModel);
         }
 
-        //http delete
+        [Authorize(Roles = RoleName.CanManageMovies)]
+        [HttpDelete]
         public ActionResult Delete(int id)
         {
             var movieInDb = _context.Movies.Single(m => m.Id == id);
@@ -73,13 +74,12 @@ namespace Vidly.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index", "Movies");
         }
-
+        [Authorize(Roles = RoleName.CanManageMovies)]
         [HttpPost]
         public ActionResult Save(Movie movie)
         {
             if(!ModelState.IsValid)
             {
-                Trace.WriteLine("El modelo no era valido" + movie);
                 var viewModel = new NewMovieViewModel(movie)
                 {
                     Genres = _context.Genres.ToList()
@@ -87,11 +87,9 @@ namespace Vidly.Controllers
                 return View("MovieForm", viewModel);
             }
 
-            Trace.WriteLine("pasó la validation");
             if(movie.Id == 0){
                 movie.DateAdded = DateTime.Now;
                 _context.Movies.Add(movie);
-                Trace.WriteLine("guardada");
             }
             else
             {
