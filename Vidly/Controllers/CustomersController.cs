@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 using Vidly.Models;
@@ -20,17 +22,18 @@ namespace Vidly.Controllers
         {
             _context.Dispose();
         }
-        
+
         public ViewResult Index()
         {
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
-
-            return View(customers);
+            var customers = _context.Customers.Include(m => m.MembershipType).ToList();
+            if (User.IsInRole(("CanManageCustomers")))
+                return View("IndexAdmin", customers);
+            return View("Index", customers);
         }
 
         public ActionResult Details(int id)
         {
-            var customer = _context.Customers.Include(c => c.MembershipType).SingleOrDefault(c => c.Id == id);
+            var customer = _context.Customers.Include(m => m.MembershipType).SingleOrDefault(m => m.Id == id);
 
             if (customer == null)
                 return HttpNotFound();
@@ -38,27 +41,65 @@ namespace Vidly.Controllers
             return View(customer);
         }
 
+       [Authorize(Roles= RoleName.CanManageCustomers)]
         public ActionResult NewCustomer()
         {
-            var membershipTypes = _context.MembershipTypes.ToList();
+            var genres = _context.MembershipTypes.ToList();
+
             var viewModel = new NewCustomerViewModel
             {
-                MembershipTypes = membershipTypes
+                MembershipTypes = genres,
             };
-            return View(viewModel);
+            return View("CustomerForm",viewModel);
+        }
+        
+        [Authorize(Roles = RoleName.CanManageCustomers)]
+        public ViewResult Save(int id)
+        {
+            var customer = _context.Customers.Single(m => m.Id == id);
+            var viewModel = new NewCustomerViewModel(customer)
+            {
+                MembershipTypes = _context.MembershipTypes.ToList(),
+            };
+            return View("CustomerForm",viewModel);
         }
 
-        public ActionResult CreateNewCustomer(Customer customer)
+        //http delete
+        public ActionResult Delete(int id)
         {
-            if (!ModelState.IsValid)
+            var customerInDb = _context.Customers.Single(m => m.Id == id);
+            _context.Customers.Remove(customerInDb);
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Customers");
+        }
+
+        [HttpPost]
+        public ActionResult Save(Customer customer)
+        {
+            if(!ModelState.IsValid)
             {
-                var viewModel = new NewCustomerViewModel
+                Trace.WriteLine("El modelo no era valido" + customer);
+                var viewModel = new NewCustomerViewModel(customer)
                 {
                     MembershipTypes = _context.MembershipTypes.ToList()
                 };
-                return View("NewCustomer", viewModel);
+                return View("CustomerForm", viewModel);
             }
-            _context.Customers.Add(customer);
+
+            Trace.WriteLine("pasó la validation");
+            if(customer.Id == 0){
+                _context.Customers.Add(customer);
+                Trace.WriteLine("guardada");
+            }
+            else
+            {
+                var customerInDb = _context.Customers.Single(m => m.Id == customer.Id);
+                customerInDb.Name = customer.Name;
+                customerInDb.MembershipType = customer.MembershipType;
+                customerInDb.MembershipTypeId= customer.MembershipTypeId;
+                customerInDb.Birthdate = customer.Birthdate;
+                customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+            }
             _context.SaveChanges();
             return RedirectToAction("Index", "Customers");
         }

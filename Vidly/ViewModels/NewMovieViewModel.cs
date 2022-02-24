@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Vidly.ViewModels
 {
-    public class MovieFormViewModel
+    public class NewMovieViewModel
     {
         public IEnumerable<Genre> Genres { get; set; }
 
@@ -39,12 +39,12 @@ namespace Vidly.ViewModels
             }
         }
 
-        public MovieFormViewModel()
+        public NewMovieViewModel()
         {
             Id = 0;
         }
 
-        public MovieFormViewModel(Movie movie)
+        public NewMovieViewModel(Movie movie)
         {
             Id = movie.Id;
             Name = movie.Name;
