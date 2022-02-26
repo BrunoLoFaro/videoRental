@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using System.Web.Http;
+using System.Data.Entity;
+using Microsoft.Ajax.Utilities;
 using Vidly.DTOs;
 using Vidly.Models;
 
@@ -17,13 +19,21 @@ namespace Vidly.Controllers.API
         {
             _context = new ApplicationDbContext();
         }
-
         [HttpGet]
-        public IEnumerable<MovieDTO> GetMovies()
+        public IEnumerable<MovieDTO> GetMovies(string query = null)
         {
-            return _context.Movies.ToList().Select(Mapper.Map<Movie,MovieDTO>);
-        }
+            var moviesQuery = _context.Movies
+                .Include(m => m.Genre)
+                .Where(m => m.NumberAvailable > 0);
 
+            if (!String.IsNullOrWhiteSpace(query))
+                moviesQuery = moviesQuery.Where(m => m.Name.Contains(query));
+
+            return moviesQuery
+                .ToList()
+                .Select(Mapper.Map<Movie, MovieDTO>);
+        }
+        
         [HttpGet]
         public IHttpActionResult GetMovie(int id)
         {
