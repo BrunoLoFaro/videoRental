@@ -43,7 +43,7 @@
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 remote: {
-                    url: '/api/customers?query=%QUERY',
+                    url: '/API/customers?query=%QUERY',
                     wildcard: '%QUERY'
                 }
             });
@@ -63,7 +63,7 @@
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 remote: {
-                    url: '/api/movies?query=%QUERY',
+                    url: '/API/movies?query=%QUERY',
                     wildcard: '%QUERY'
                 }
             });
@@ -91,8 +91,8 @@
             var validator = $("#newRental").validate({
                 submitHandler: function () {
                     $.ajax({
-                        url: "/api/newRentals",
-                        method: "post",
+                        url: "/api/rentals",
+                        method: "POST",
                         data: vm
                     })
                     .done(function () {

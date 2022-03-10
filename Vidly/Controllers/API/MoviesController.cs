@@ -44,51 +44,51 @@ namespace Vidly.Controllers.API
         }
 
         [HttpPost]
-        public IHttpActionResult CreateMovie(MovieDTO customerDto)
+        public IHttpActionResult CreateMovie(MovieDTO movieDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(); //return exception
-            var movie = Mapper.Map<MovieDTO, Movie>(customerDto);
+            var movie = Mapper.Map<MovieDTO, Movie>(movieDto);
 
             _context.Movies.Add(movie);
             _context.SaveChanges();
 
-            customerDto.Id = movie.Id;
+            movieDto.Id = movie.Id;
 
-            return Created(new Uri(Request.RequestUri + "/" + movie.Id), customerDto);
+            return Created(new Uri(Request.RequestUri + "/" + movie.Id), movieDto);
         }
 
         // PUT: api/Movies/5
         [HttpPut]
-        public IHttpActionResult PutMovie(int id, MovieDTO customerDto)
+        public IHttpActionResult PutMovie(int id, MovieDTO movieDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var customerInDb = _context.Movies.SingleOrDefault(c => c.Id == id);
+            var movieInDb = _context.Movies.SingleOrDefault(c => c.Id == id);
 
-            if (customerInDb == null)
+            if (movieInDb == null)
                 return NotFound();
 
-            Mapper.Map(customerDto, customerInDb);
+            Mapper.Map(movieDto, movieInDb);
 
                 _context.SaveChanges();
 
-            return Ok(customerDto);
+            return Ok(movieDto);
         }
 
         // DELETE: api/Movies/5
         [HttpDelete]
         public IHttpActionResult DeleteMovie(int id)
         {
-            var customerInDb = _context.Movies.SingleOrDefault(c=>c.Id == id);
-            if (customerInDb == null)
+            var movieInDb = _context.Movies.SingleOrDefault(c=>c.Id == id);
+            if (movieInDb == null)
                 return NotFound();
 
-            _context.Movies.Remove(customerInDb);
+            _context.Movies.Remove(movieInDb);
             _context.SaveChanges();
 
-            return Ok(customerInDb);
+            return Ok(movieInDb);
         }
     }
 }
