@@ -5,16 +5,14 @@ using System.Web;
 
 namespace Vidly.DTOs
 {
-    public class RentalDto
+    public class OrderDto
     {
         public int Id { get; set; }
 
         public byte CustomerId { get; set; }
 
-        public List<byte> MovieIdsList { get; set; }
+        public int Price { get; set; }
 
         public byte CardId { get; set; }
-
-        public CardDto Card { get; set; }
     }
 }

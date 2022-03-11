@@ -15,7 +15,7 @@ namespace Vidly.Migrations
                         Number = c.Int(nullable: false),
                         Brand = c.String(),
                         Code = c.Byte(nullable: false),
-                        Owner = c.String(),
+                        OwnerFullName = c.String(),
                         ExpirationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);

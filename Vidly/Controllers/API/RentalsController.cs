@@ -25,28 +25,30 @@ namespace Vidly.Controllers.API
         [HttpPost]
         public IHttpActionResult CreateRental(RentalDto rentalDto)
         {
-            var customer = _context.Customers.Single(
+           /* var customer = _context.Customers.Single(
                 c => c.Id == rentalDto.CustomerId);
 
             var movies = _context.Movies.Where(
-                m => rentalDto.MovieIds.Contains(m.Id)).ToList();
+                m => rentalDto.MovieIdsList.Contains(m.Id)).ToList();
 
             foreach (var movie in movies)
             {
                 if (movie.NumberAvailable == 0)
                     return BadRequest("Movie is not available.");
-
                 movie.NumberAvailable--;
-
-                var rental = new Rental
-                {
-                    Customer = customer,
-                    Movie = movie,
-                    DateRented = DateTime.Now
-                };
-
-                _context.Rentals.Add(rental);
             }
+
+            var card = Mapper.Map<CardDto, Card>(rentalDto.Card);
+
+            var rental = new Rental
+            {
+                Customer = customer,
+                MovieList = movies,
+                DateRented = DateTime.Now,
+                Card = card
+            };
+
+            _context.Rentals.Add(rental);
 
             try
             {
@@ -55,7 +57,7 @@ namespace Vidly.Controllers.API
             catch(DbEntityValidationException e)
             {
                 Console.WriteLine(e);
-            }
+            }*/
             return Ok();
         }
     }

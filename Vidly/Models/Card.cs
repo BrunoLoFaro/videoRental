@@ -11,7 +11,7 @@ namespace Vidly.Models
         public int Number { get; set; }
         public string Brand { get; set; }
         public byte Code { get; set; }
-        public string Owner { get; set; }
+        public string OwnerFullName { get; set; }
         public DateTime ExpirationDate { get; set; }
     }
 }

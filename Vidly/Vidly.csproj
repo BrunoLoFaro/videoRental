@@ -184,7 +184,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\CustomerController.cs" />
+    <Compile Include="Controllers\API\ItemsController.cs" />
     <Compile Include="Controllers\API\MoviesController.cs" />
+    <Compile Include="Controllers\API\OrderController.cs" />
     <Compile Include="Controllers\API\RentalsController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -194,8 +196,10 @@
     <Compile Include="DTOs\CardDto.cs" />
     <Compile Include="DTOs\CustomerDTO.cs" />
     <Compile Include="DTOs\GenreDto.cs" />
+    <Compile Include="DTOs\ItemDto.cs" />
     <Compile Include="DTOs\MembershipTypeDto.cs" />
     <Compile Include="DTOs\MovieDTO.cs" />
+    <Compile Include="DTOs\OrderDto.cs" />
     <Compile Include="DTOs\RentalDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -256,25 +260,33 @@
     <Compile Include="Migrations\202202240118567_SeedUsers1.Designer.cs">
       <DependentUpon>202202240118567_SeedUsers1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202202241713427_AddedRentalsDbContext.cs" />
-    <Compile Include="Migrations\202202241713427_AddedRentalsDbContext.Designer.cs">
-      <DependentUpon>202202241713427_AddedRentalsDbContext.cs</DependentUpon>
+    <Compile Include="Migrations\202203111638078_AddMovieNumberAvalilable.cs" />
+    <Compile Include="Migrations\202203111638078_AddMovieNumberAvalilable.Designer.cs">
+      <DependentUpon>202203111638078_AddMovieNumberAvalilable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202202241814019_GenreandMembershipTypesDtos.cs" />
-    <Compile Include="Migrations\202202241814019_GenreandMembershipTypesDtos.Designer.cs">
-      <DependentUpon>202202241814019_GenreandMembershipTypesDtos.cs</DependentUpon>
+    <Compile Include="Migrations\202203111639379_AddCard.cs" />
+    <Compile Include="Migrations\202203111639379_AddCard.Designer.cs">
+      <DependentUpon>202203111639379_AddCard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202202252055332_AddedNumberAvailableToMovies.cs" />
-    <Compile Include="Migrations\202202252055332_AddedNumberAvailableToMovies.Designer.cs">
-      <DependentUpon>202202252055332_AddedNumberAvailableToMovies.cs</DependentUpon>
+    <Compile Include="Migrations\202203111717188_Addorder.cs" />
+    <Compile Include="Migrations\202203111717188_Addorder.Designer.cs">
+      <DependentUpon>202203111717188_Addorder.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203091921521_AddCard.cs" />
-    <Compile Include="Migrations\202203091921521_AddCard.Designer.cs">
-      <DependentUpon>202203091921521_AddCard.cs</DependentUpon>
+    <Compile Include="Migrations\202203111724576_AddItem.cs" />
+    <Compile Include="Migrations\202203111724576_AddItem.Designer.cs">
+      <DependentUpon>202203111724576_AddItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203101909149_AddCardToRental.cs" />
-    <Compile Include="Migrations\202203101909149_AddCardToRental.Designer.cs">
-      <DependentUpon>202203101909149_AddCardToRental.cs</DependentUpon>
+    <Compile Include="Migrations\202203111725446_AddMoviePrice.cs" />
+    <Compile Include="Migrations\202203111725446_AddMoviePrice.Designer.cs">
+      <DependentUpon>202203111725446_AddMoviePrice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203111755336_RemoveMovieNumberAvailable.cs" />
+    <Compile Include="Migrations\202203111755336_RemoveMovieNumberAvailable.Designer.cs">
+      <DependentUpon>202203111755336_RemoveMovieNumberAvailable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203111826537_ChangeOrderCardToCardId.cs" />
+    <Compile Include="Migrations\202203111826537_ChangeOrderCardToCardId.Designer.cs">
+      <DependentUpon>202203111826537_ChangeOrderCardToCardId.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -282,10 +294,11 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Models\Movie.cs" />
-    <Compile Include="Models\Rental.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -605,20 +618,26 @@
     <EmbeddedResource Include="Migrations\202202240118567_SeedUsers1.resx">
       <DependentUpon>202202240118567_SeedUsers1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202202241713427_AddedRentalsDbContext.resx">
-      <DependentUpon>202202241713427_AddedRentalsDbContext.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203111638078_AddMovieNumberAvalilable.resx">
+      <DependentUpon>202203111638078_AddMovieNumberAvalilable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202202241814019_GenreandMembershipTypesDtos.resx">
-      <DependentUpon>202202241814019_GenreandMembershipTypesDtos.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203111639379_AddCard.resx">
+      <DependentUpon>202203111639379_AddCard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202202252055332_AddedNumberAvailableToMovies.resx">
-      <DependentUpon>202202252055332_AddedNumberAvailableToMovies.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203111717188_Addorder.resx">
+      <DependentUpon>202203111717188_Addorder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202203091921521_AddCard.resx">
-      <DependentUpon>202203091921521_AddCard.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203111724576_AddItem.resx">
+      <DependentUpon>202203111724576_AddItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202203101909149_AddCardToRental.resx">
-      <DependentUpon>202203101909149_AddCardToRental.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203111725446_AddMoviePrice.resx">
+      <DependentUpon>202203111725446_AddMoviePrice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203111755336_RemoveMovieNumberAvailable.resx">
+      <DependentUpon>202203111755336_RemoveMovieNumberAvailable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203111826537_ChangeOrderCardToCardId.resx">
+      <DependentUpon>202203111826537_ChangeOrderCardToCardId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
