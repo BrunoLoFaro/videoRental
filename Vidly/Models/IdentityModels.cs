@@ -33,7 +33,6 @@ namespace Vidly.Models
         public DbSet<Genre> Genres { get; set; }
         public DbSet<MembershipType> MembershipTypes { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Card> Card { get; set; }
         public DbSet<Item> Item { get; set; }
 
         public ApplicationDbContext()

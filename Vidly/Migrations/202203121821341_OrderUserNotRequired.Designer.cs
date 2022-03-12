@@ -7,13 +7,13 @@ namespace Vidly.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class ChangeOrderCardToCardId : IMigrationMetadata
+    public sealed partial class OrderUserNotRequired : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangeOrderCardToCardId));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(OrderUserNotRequired));
         
         string IMigrationMetadata.Id
         {
-            get { return "202203111826537_ChangeOrderCardToCardId"; }
+            get { return "202203121821341_OrderUserNotRequired"; }
         }
         
         string IMigrationMetadata.Source

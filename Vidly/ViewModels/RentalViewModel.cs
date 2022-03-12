@@ -9,6 +9,6 @@ namespace Vidly.ViewModels
     public class RentalViewModel
     {
         //public Rental Rental { get; set; }
-        public Card Card { get; set; }
+        //public Card Card { get; set; }
     }
 }

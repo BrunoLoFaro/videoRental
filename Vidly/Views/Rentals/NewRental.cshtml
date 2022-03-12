@@ -6,26 +6,6 @@
 
 <h2>New Rental Form</h2>
 
-<form id="newOrder">
-    <div class="form-group">
-        <label>Customer</label>
-        <div class="tt-container">
-            <input id="customer" name="customer" data-rule-validcustomer="true" required type="text" value="" class="form-control" />
-        </div>
-    </div>
-
-    <label>Card</label>
-    <div id="card" class="tt-container">
-        <input id="CardId" placeholder="CardId" name="card" type="text" value="" class="form-control" />
-        <input id="CardNumber" placeholder="CardNumber" name="card" type="text" value="" class="form-control" />
-        <input id="CardBrand" placeholder="CardBrand" name="card" type="text" value="" class="form-control" />
-        <input id="CardCode" placeholder="CardCode" name="card" type="text" value="" class="form-control" />
-        <input id="CardOwnerFullName" placeholder="CardOwnerFullName" name="card" type="text" value="" class="form-control" />
-        <input id="CardExpirationDate" placeholder="CardExpirationDate" name="card" type="text" value="" class="form-control" />
-    </div>
-
-    <button class="btn btn-primary">Submit</button>
-</form>
 <form id="movieForm">
     <div class="form-group">
         <label>Movie</label>
@@ -42,125 +22,100 @@
 
     <button class="btn btn-primary">Submit</button>
 </form>
+<!--
+<form id="newOrder">
 
+
+    <label>Card</label>
+    <div id="card" class="tt-container">
+        <input id="CardId" placeholder="CardId" name="card" type="text" value="" class="form-control" />
+        <input id="CardNumber" placeholder="CardNumber" name="card" type="text" value="" class="form-control" />
+        <input id="CardBrand" placeholder="CardBrand" name="card" type="text" value="" class="form-control" />
+        <input id="CardCode" placeholder="CardCode" name="card" type="text" value="" class="form-control" />
+        <input id="CardOwnerFullName" placeholder="CardOwnerFullName" name="card" type="text" value="" class="form-control" />
+        <input id="CardExpirationDate" placeholder="CardExpirationDate" name="card" type="text" value="" class="form-control" />
+    </div>
+
+    <button class="btn btn-primary">Submit</button>
+</form>
+-->
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        $(document).ready(function() {
-
-            var order = {};
+        $(document).ready(function () {
 
             var items = {
                 movieIdsList: []
             };
 
-                var customers = new Bloodhound({
-                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Name'),
-                    queryTokenizer: Bloodhound.tokenizers.whitespace,
-                    remote: {
-                        url: '/API/customers?query=%QUERY',
-                        wildcard: '%QUERY'
-                    }
-                });
-                $('#customer').typeahead({
-                        minLength: 3,
-                        highlight: true
-                    },
-                    {
-                        name: 'customers',
-                        display: 'Name',
-                        source: customers
-                    }).on("typeahead:select",
-                    function(e, customer) {
-                        order.customerId = customer.Id;
+            //get empty order to load items on it
+            function createOrder(msg, status, jqXHR) {
+            $.ajax({
+                url: "/api/order",
+                method: "GET",
+                })
+                    .done(function(orderId) {
+                        items.OrderId = orderId;
+                        console.log("order" + orderId + "created");
+                    })
+                    .fail(function() {
+                        toastr.error("Something unexpected happened.");
                     });
+                return false;
+            }
 
+            createOrder();
 
-                $.validator.addMethod("validCustomer",
-                    function() {
-                        return order.customerId && order.customerId !== 0;
-                    },
-                    "Please select a valid customer.");
-
-
-                $('#CardId').blur(function () {
-                    order.cardId = this.val();
-                });
-
-
-                var orderForm = $("#newOrder").validate({
-                    submitHandler: function(msg, status, jqXHR) {
-                        $.ajax({
-                                url: "/api/order",
-                                method: "POST",
-                                data: order
-                            })
-                            .done(function(data) {
-                                console.log(data);
-                                items.OrderId = data;
-                                /*toastr.success("Order successfully recorded.");
-                                $("#customer").typeahead("val", "");
-                                orderForm.resetForm();*/
-                            })
-                            .fail(function() {
-                                toastr.error("Something unexpected happened.");
-                            });
-                        return false;
-                    }
-                });
-
-
-    
-                var movies = new Bloodhound({
-                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Name'),
-                    queryTokenizer: Bloodhound.tokenizers.whitespace,
-                    remote: {
-                        url: '/API/movies?query=%QUERY',
-                        wildcard: '%QUERY'
-                    }
-                });
-                $('#movie').typeahead({
-                    minLength: 3,
-                    highlight: true
-                }, {
-                    name: 'movies',
-                    display: 'Name',
-                    source: movies
-                }).on("typeahead:select", function (e, movie) {
-                    $("#movies").append("<li class='list-group-item'>" + movie.Name + "</li>");
-                    $("#movie").typeahead("val", "");
-                    items.movieIdsList.push(movie.Id);
-                });
-    
-                $.validator.addMethod("atLeastOneMovie", function () {
-                    return items.movieIdsList.length > 0;
-                }, "Please select at least one movie.");
-    
-                var movieForm = $("#movieForm").validate({
-                    submitHandler: function () {
-                        $.ajax({
-                                url: "/api/items",
-                                method: "POST",
-                                data: items
-                            })
-                            .done(function () {
-                                toastr.success("Rental successfully recorded.");
-                                $("#customer").typeahead("val", "");
-                                $("#movie").typeahead("val", "");
-                                $("#movies").empty();
-                                items = {
-                                    movieIdsList: []
-                                };
-                                orderForm.resetForm();
-                            })
-                            .fail(function () {
-                                toastr.error("Something unexpected happened.");
-                            });
-                        return false;
-                    }
-                });
-    
+            var movies = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/API/movies?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
             });
-</script>
+            $('#movie').typeahead({
+                minLength: 3,
+                highlight: true
+            }, {
+                name: 'movies',
+                display: 'Name',
+                source: movies
+            }).on("typeahead:select", function (e, movie) {
+                $("#movies").append("<li class='list-group-item'>" + movie.Name + "</li>");
+                $("#movie").typeahead("val", "");
+                items.movieIdsList.push(movie.Id);
+            });
+
+            $.validator.addMethod("atLeastOneMovie", function () {
+                return items.movieIdsList.length > 0;
+            }, "Please select at least one movie.");
+
+
+        //load items to order
+        var movieForm = $("#movieForm").validate({
+            submitHandler: function () {
+                $.ajax({
+                    url: "/api/items",
+                    method: "POST",
+                    data: items
+                })
+                    .done(function () {
+                        toastr.success("Rental successfully recorded.");
+                        $("#movie").typeahead("val", "");
+                        $("#movies").empty();
+                        items = {
+                            movieIdsList: []
+                        };
+                    })
+                    .fail(function () {
+                        toastr.error("Something unexpected happened.");
+                    });
+                return false;
+            }
+        });
+
+    });
+    </script>
 }

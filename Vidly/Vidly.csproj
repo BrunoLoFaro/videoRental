@@ -20,6 +20,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -276,21 +278,32 @@
     <Compile Include="Migrations\202203111724576_AddItem.Designer.cs">
       <DependentUpon>202203111724576_AddItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203111725446_AddMoviePrice.cs" />
-    <Compile Include="Migrations\202203111725446_AddMoviePrice.Designer.cs">
-      <DependentUpon>202203111725446_AddMoviePrice.cs</DependentUpon>
+    <Compile Include="Migrations\202203120319118_AddMoviePrice.cs" />
+    <Compile Include="Migrations\202203120319118_AddMoviePrice.Designer.cs">
+      <DependentUpon>202203120319118_AddMoviePrice.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203111755336_RemoveMovieNumberAvailable.cs" />
-    <Compile Include="Migrations\202203111755336_RemoveMovieNumberAvailable.Designer.cs">
-      <DependentUpon>202203111755336_RemoveMovieNumberAvailable.cs</DependentUpon>
+    <Compile Include="Migrations\202203120412373_DeleteCards.cs" />
+    <Compile Include="Migrations\202203120412373_DeleteCards.Designer.cs">
+      <DependentUpon>202203120412373_DeleteCards.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203111826537_ChangeOrderCardToCardId.cs" />
-    <Compile Include="Migrations\202203111826537_ChangeOrderCardToCardId.Designer.cs">
-      <DependentUpon>202203111826537_ChangeOrderCardToCardId.cs</DependentUpon>
+    <Compile Include="Migrations\202203120413198_DeleteOrderCustomer.cs" />
+    <Compile Include="Migrations\202203120413198_DeleteOrderCustomer.Designer.cs">
+      <DependentUpon>202203120413198_DeleteOrderCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203121533401_AddOrderUser.cs" />
+    <Compile Include="Migrations\202203121533401_AddOrderUser.Designer.cs">
+      <DependentUpon>202203121533401_AddOrderUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203121546294_AddOrderIsValid.cs" />
+    <Compile Include="Migrations\202203121546294_AddOrderIsValid.Designer.cs">
+      <DependentUpon>202203121546294_AddOrderIsValid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203121821341_OrderUserNotRequired.cs" />
+    <Compile Include="Migrations\202203121821341_OrderUserNotRequired.Designer.cs">
+      <DependentUpon>202203121821341_OrderUserNotRequired.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -630,14 +643,23 @@
     <EmbeddedResource Include="Migrations\202203111724576_AddItem.resx">
       <DependentUpon>202203111724576_AddItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202203111725446_AddMoviePrice.resx">
-      <DependentUpon>202203111725446_AddMoviePrice.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203120319118_AddMoviePrice.resx">
+      <DependentUpon>202203120319118_AddMoviePrice.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202203111755336_RemoveMovieNumberAvailable.resx">
-      <DependentUpon>202203111755336_RemoveMovieNumberAvailable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203120412373_DeleteCards.resx">
+      <DependentUpon>202203120412373_DeleteCards.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202203111826537_ChangeOrderCardToCardId.resx">
-      <DependentUpon>202203111826537_ChangeOrderCardToCardId.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203120413198_DeleteOrderCustomer.resx">
+      <DependentUpon>202203120413198_DeleteOrderCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203121533401_AddOrderUser.resx">
+      <DependentUpon>202203121533401_AddOrderUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203121546294_AddOrderIsValid.resx">
+      <DependentUpon>202203121546294_AddOrderIsValid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203121821341_OrderUserNotRequired.resx">
+      <DependentUpon>202203121821341_OrderUserNotRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

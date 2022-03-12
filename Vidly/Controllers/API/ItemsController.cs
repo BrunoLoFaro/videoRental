@@ -20,7 +20,7 @@ namespace Vidly.Controllers.API
         }
 
         [HttpPost]
-        public IHttpActionResult CreateRental(ItemDto itemDto)
+        public IHttpActionResult AddItems(ItemDto itemDto)
         {
 
             var movies = _context.Movies.Where(

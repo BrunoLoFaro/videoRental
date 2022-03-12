@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using AutoMapper;
+using Microsoft.AspNet.Identity;
 using Vidly.DTOs;
 using Vidly.Models;
 
@@ -20,17 +21,16 @@ namespace Vidly.Controllers.API
             _context = new ApplicationDbContext();
         }
 
-        [HttpPost]
-        public IHttpActionResult CreateOrder(OrderDto orderDto)
+        [HttpGet]
+        public IHttpActionResult CreateOrder()
         {
-            var customer = _context.Customers.Single(
-                c => c.Id == orderDto.CustomerId);
-            
-                var order = new Order
+            var currentUserId = User.Identity.GetUserId();
+            var order = new Order
                 {
-                    Customer = customer,
-                    CardId = orderDto.CardId,
-                    Price = 0
+                    UserId = currentUserId,
+                    CardId = 0,
+                    Price = 0,
+                    IsValid = false
                 };
         
             _context.Orders.Add(order);
@@ -45,5 +45,27 @@ namespace Vidly.Controllers.API
             }
             return Ok(order.Id);
         }
+
+        [HttpPut]//add auth?
+        public IHttpActionResult UpdateOrder(OrderDto orderDto)
+        {
+
+            var order = _context.Orders.Single(
+                c => c.Id == orderDto.Id);
+
+            order.CardId = orderDto.CardId;
+            order.Price = 0;//query items table and sum
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                Console.WriteLine(e);
+            }
+            return Ok(order.Id);
+        }
+
     }
 }
