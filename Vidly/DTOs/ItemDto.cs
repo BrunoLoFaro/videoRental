@@ -9,6 +9,6 @@ namespace Vidly.DTOs
     {
         public int Id { get; set; }
         public List<int> MovieIdsList { get; set; }
-        public byte OrderId { get; set; }
+        public int OrderId { get; set; }
     }
 }

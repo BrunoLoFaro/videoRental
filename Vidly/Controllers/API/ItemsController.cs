@@ -22,7 +22,6 @@ namespace Vidly.Controllers.API
         [HttpPost]
         public IHttpActionResult AddItems(ItemDto itemDto)
         {
-
             var movies = _context.Movies.Where(
                 m => itemDto.MovieIdsList.Contains(m.Id)).ToList();
 

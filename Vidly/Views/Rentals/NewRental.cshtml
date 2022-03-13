@@ -6,7 +6,7 @@
 
 <h2>New Rental Form</h2>
 
-<form id="movieForm">
+<form id="movieForm" action="http://localhost:49333/Orders/NewOrder">
     <div class="form-group">
         <label>Movie</label>
         <div class="tt-container">
@@ -22,23 +22,7 @@
 
     <button class="btn btn-primary">Submit</button>
 </form>
-<!--
-<form id="newOrder">
 
-
-    <label>Card</label>
-    <div id="card" class="tt-container">
-        <input id="CardId" placeholder="CardId" name="card" type="text" value="" class="form-control" />
-        <input id="CardNumber" placeholder="CardNumber" name="card" type="text" value="" class="form-control" />
-        <input id="CardBrand" placeholder="CardBrand" name="card" type="text" value="" class="form-control" />
-        <input id="CardCode" placeholder="CardCode" name="card" type="text" value="" class="form-control" />
-        <input id="CardOwnerFullName" placeholder="CardOwnerFullName" name="card" type="text" value="" class="form-control" />
-        <input id="CardExpirationDate" placeholder="CardExpirationDate" name="card" type="text" value="" class="form-control" />
-    </div>
-
-    <button class="btn btn-primary">Submit</button>
-</form>
--->
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
@@ -50,7 +34,7 @@
             };
 
             //get empty order to load items on it
-            function createOrder(msg, status, jqXHR) {
+            /*function createOrder(msg, status, jqXHR) {
             $.ajax({
                 url: "/api/order",
                 method: "GET",
@@ -65,7 +49,7 @@
                 return false;
             }
 
-            createOrder();
+            createOrder();*/
 
             var movies = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Name'),
@@ -86,6 +70,7 @@
                 $("#movies").append("<li class='list-group-item'>" + movie.Name + "</li>");
                 $("#movie").typeahead("val", "");
                 items.movieIdsList.push(movie.Id);
+                localStorage.setItem("items", JSON.stringify(items));
             });
 
             $.validator.addMethod("atLeastOneMovie", function () {
@@ -94,27 +79,7 @@
 
 
         //load items to order
-        var movieForm = $("#movieForm").validate({
-            submitHandler: function () {
-                $.ajax({
-                    url: "/api/items",
-                    method: "POST",
-                    data: items
-                })
-                    .done(function () {
-                        toastr.success("Rental successfully recorded.");
-                        $("#movie").typeahead("val", "");
-                        $("#movies").empty();
-                        items = {
-                            movieIdsList: []
-                        };
-                    })
-                    .fail(function () {
-                        toastr.error("Something unexpected happened.");
-                    });
-                return false;
-            }
-        });
+        var movieForm = $("#movieForm").validate({});
 
     });
     </script>

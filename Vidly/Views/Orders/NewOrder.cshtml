@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "NewOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>NewOrder</h2>
+<form id="orderForm">
+
+    <label>Card</label>
+
+    <div id="card" class="tt-container">
+        <input id="CardId" placeholder="CardId" name="card" type="text" value="" class="form-control"/>
+        <input id="CardNumber" placeholder="CardNumber" name="card" type="text" value="" class="form-control"/>
+        <input id="CardBrand" placeholder="CardBrand" name="card" type="text" value="" class="form-control"/>
+        <input id="CardCode" placeholder="CardCode" name="card" type="text" value="" class="form-control"/>
+        <input id="CardOwnerFullName" placeholder="CardOwnerFullName" name="card" type="text" value="" class="form-control"/>
+        <input id="CardExpirationDate" placeholder="CardExpirationDate" name="card" type="text" value="" class="form-control"/>
+    </div>
+
+    <button class="btn btn-primary">Submit</button>
+</form>
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var items = JSON.parse(localStorage.getItem("items"));
+        console.log(items);
+        
+         var orderForm = $("#orderForm").validate({
+             submitHandler: function () {
+                 $.ajax({
+                         url: "/api/order",
+                         method: "GET",
+                     })
+                     .done(function (OrderId) {
+                         console.log(items.OrderId);
+                         items.OrderId = OrderId;
+                         console.log("order" + items.OrderId + "created");
+                         console.log(items);
+                         $.ajax({
+                                 url: "/api/items",
+                                 method: "POST",
+                             data: items
+                             })
+                             .done(function () {
+                                 toastr.success("Rental successfully recorded.");
+                                 localStorage.removeItem("items");
+                             })
+                             .fail(function () {
+                                 toastr.error("Something unexpected happened.");
+                             });
+                         return false;
+
+                     })
+                     .fail(function() {
+                         toastr.error("Something unexpected happened.");
+                     });
+                 return false;
+             }
+
+         });
+         
+    </script>
+}

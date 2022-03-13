@@ -49,7 +49,6 @@ namespace Vidly.Controllers.API
         [HttpPut]//add auth?
         public IHttpActionResult UpdateOrder(OrderDto orderDto)
         {
-
             var order = _context.Orders.Single(
                 c => c.Id == orderDto.Id);
 
