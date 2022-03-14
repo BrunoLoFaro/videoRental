@@ -21,19 +21,52 @@ namespace Vidly.Controllers.API
             _context = new ApplicationDbContext();
         }
 
-        [HttpGet]
-        public IHttpActionResult CreateOrder()
+        [HttpPost]
+        public IHttpActionResult CreateOrder(OrderDto orderDto)
         {
-            var currentUserId = User.Identity.GetUserId();
+
+            OrderDto copy = orderDto;
+
+        var currentUserId = User.Identity.GetUserId();
+
             var order = new Order
-                {
-                    UserId = currentUserId,
-                    CardId = 0,
-                    Price = 0,
-                    IsValid = false
-                };
-        
+            {
+                UserId = currentUserId,
+                CardId = orderDto.CardId,
+                Price = 0,
+                IsValid = false
+            };
+
             _context.Orders.Add(order);
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                Console.WriteLine(e);
+            }
+
+            var movies = _context.Movies.Where(
+                m => orderDto.MovieIdsList.Contains(m.Id)).ToList();
+
+            foreach (var movie in movies)
+            {
+                if (movie.NumberInStock == 0)
+                    return BadRequest("Movie is not available.");
+
+                movie.NumberInStock--;
+                order.Price += movie.Price;
+
+                var item = new Item
+                {
+                    Movie = movie,
+                    Order = order
+                };
+
+                _context.Item.Add(item);
+            }
 
             try
             {

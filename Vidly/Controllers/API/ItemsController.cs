@@ -28,12 +28,13 @@ namespace Vidly.Controllers.API
             var order = _context.Orders.Single(
                             c => c.Id == itemDto.OrderId);
 
-
+            int price=0;
              foreach (var movie in movies)
              {
                  if (movie.NumberInStock == 0)
                      return BadRequest("Movie is not available.");
                  movie.NumberInStock--;
+                 price += movie.Price;
 
                  var item = new Item
                  {

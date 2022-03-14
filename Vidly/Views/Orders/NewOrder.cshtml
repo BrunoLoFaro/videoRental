@@ -9,7 +9,7 @@
     <label>Card</label>
 
     <div id="card" class="tt-container">
-        <input id="CardId" placeholder="CardId" name="card" type="text" value="" class="form-control"/>
+        <input id="CardId" data-rule-validCard="true" placeholder="CardId" name="card" type="text" value="" class="form-control"/>
         <input id="CardNumber" placeholder="CardNumber" name="card" type="text" value="" class="form-control"/>
         <input id="CardBrand" placeholder="CardBrand" name="card" type="text" value="" class="form-control"/>
         <input id="CardCode" placeholder="CardCode" name="card" type="text" value="" class="form-control"/>
@@ -25,34 +25,30 @@
 {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        var items = JSON.parse(localStorage.getItem("items"));
-        console.log(items);
-        
-         var orderForm = $("#orderForm").validate({
-             submitHandler: function () {
+        var orderDto = JSON.parse(localStorage.getItem("orderDto"));
+        console.log(orderDto);
+        $.validator.addMethod("validCard", async function () {
+            var userAction = async () => {
+                var response = await fetch('http://localhost:3000/validateCard/2');
+                var resJson = await response.json(); //extract JSON from the http response
+                return resJson;
+            }
+            var res = await userAction();
+            console.log(res.valid);
+            return res.valid;
+        }, "Please input a valid card.");
+
+        var orderForm = $("#orderForm").validate({
+            submitHandler: function () {
+                orderDto.CardId = $("#CardId").val();
+                console.log(orderDto);
                  $.ajax({
                          url: "/api/order",
-                         method: "GET",
+                         method: "POST",
+                         data: orderDto
                      })
                      .done(function (OrderId) {
-                         console.log(items.OrderId);
-                         items.OrderId = OrderId;
-                         console.log("order" + items.OrderId + "created");
-                         console.log(items);
-                         $.ajax({
-                                 url: "/api/items",
-                                 method: "POST",
-                             data: items
-                             })
-                             .done(function () {
-                                 toastr.success("Rental successfully recorded.");
-                                 localStorage.removeItem("items");
-                             })
-                             .fail(function () {
-                                 toastr.error("Something unexpected happened.");
-                             });
-                         return false;
-
+                         toastr.success("Rental successfully recorded.");
                      })
                      .fail(function() {
                          toastr.error("Something unexpected happened.");

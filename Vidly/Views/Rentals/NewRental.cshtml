@@ -29,18 +29,18 @@
     <script>
         $(document).ready(function () {
 
-            var items = {
-                movieIdsList: []
+            var orderDto = {
+                MovieIdsList: []
             };
 
-            //get empty order to load items on it
+            //get empty order to load orderDto on it
             /*function createOrder(msg, status, jqXHR) {
             $.ajax({
                 url: "/api/order",
                 method: "GET",
                 })
                     .done(function(orderId) {
-                        items.OrderId = orderId;
+                        orderDto.OrderId = orderId;
                         console.log("order" + orderId + "created");
                     })
                     .fail(function() {
@@ -69,16 +69,16 @@
             }).on("typeahead:select", function (e, movie) {
                 $("#movies").append("<li class='list-group-item'>" + movie.Name + "</li>");
                 $("#movie").typeahead("val", "");
-                items.movieIdsList.push(movie.Id);
-                localStorage.setItem("items", JSON.stringify(items));
+                orderDto.MovieIdsList.push(movie.Id);
+                localStorage.setItem("orderDto", JSON.stringify(orderDto));
             });
 
             $.validator.addMethod("atLeastOneMovie", function () {
-                return items.movieIdsList.length > 0;
+                return orderDto.MovieIdsList.length > 0;
             }, "Please select at least one movie.");
 
 
-        //load items to order
+        //load orderDto to order
         var movieForm = $("#movieForm").validate({});
 
     });

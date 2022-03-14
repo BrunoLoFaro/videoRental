@@ -11,9 +11,7 @@ namespace Vidly.DTOs
     {
         public int Id { get; set; }
 
-        public byte CustomerId { get; set; }
-
-        public int Price { get; set; }
+        public List<int> MovieIdsList { get; set; }
 
         public byte CardId { get; set; }
     }
