@@ -33,24 +33,6 @@
                 MovieIdsList: []
             };
 
-            //get empty order to load orderDto on it
-            /*function createOrder(msg, status, jqXHR) {
-            $.ajax({
-                url: "/api/order",
-                method: "GET",
-                })
-                    .done(function(orderId) {
-                        orderDto.OrderId = orderId;
-                        console.log("order" + orderId + "created");
-                    })
-                    .fail(function() {
-                        toastr.error("Something unexpected happened.");
-                    });
-                return false;
-            }
-
-            createOrder();*/
-
             var movies = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,

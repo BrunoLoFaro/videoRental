@@ -42,21 +42,23 @@
             submitHandler: function () {
                 orderDto.CardId = $("#CardId").val();
                 console.log(orderDto);
-                 $.ajax({
-                         url: "/api/order",
-                         method: "POST",
-                         data: orderDto
-                     })
-                     .done(function (OrderId) {
-                         toastr.success("Rental successfully recorded.");
-                     })
-                     .fail(function() {
-                         toastr.error("Something unexpected happened.");
-                     });
-                 return false;
-             }
+                $.ajax({
+                        url: "/api/order",
+                        method: "POST",
+                        data: orderDto
+                    })
+                    .done(function (OrderId) {
+                        toastr.success("Rental successfully recorded.");
+                    })
+                    .fail(function() {
+                        toastr.error("Something unexpected happened.");
+                    });
+                return false;
+            }
 
-         });
-         
+        });
+        
+
     </script>
+
 }
