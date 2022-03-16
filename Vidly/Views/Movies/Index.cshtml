@@ -7,138 +7,198 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Hello, world!</title>
+    <style>
+        .row {
+            padding: 1%
+        }
+    </style>
 </head>
 
 <body>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    -->
-    <style>
-        .col-sm {
-            padding: 1%
-        }
-    </style>
+    
+
     <h2>Movies</h2>
-    <!--<button id="button"></button>-->
     <div class="container" id="container">
-    <!--<div class="row">
-        <div class="col-sm">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+        <!--Card container-->
+    </div>
+
+<!-- Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" id="closeCartButton" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="modal-body">
+                    <ul class="list-group" id="cartList">
+                        <!--movies go here-->
+                    </ul>
                 </div>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
+                <div class="modal-footer"></div>
             </div>
         </div>
     </div>
-    -->
-    </div>
-    @foreach (var movie in Model)
-    {
-        <tr>
-            <td>@Html.ActionLink(movie.Name, "Details", "Movies", new { id = movie.Id }, null)</td>
-            <td>@movie.Genre.Name</td>
-        </tr>
-    }
-
-
-    @section scripts
-{
-        <script>
-
-            let movieCardMarkup = (movie) => {
-                let cardMarkup = `
-                    <div class="col-sm">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">${movie.Name}</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>`;
-                return cardMarkup;
-            }
-
-
-            let addMovieCards = async () => {
-                let movies = await getMovies();
-
-                let veces = Math.trunc(movies.length / 4);
-                let resto = movies.length % 4;
-
-                let k = 0;
-
-                for (let i = 0; i < veces; i++) {
-
-                    console.log("row"+i);
-                    let row = $(`<div class="row">`);
-
-                    for (let j = 0; j < 4; j++) {
-                        row.append(movieCardMarkup(movies[k]));
-                            k++;
-                    }
-
-                    $("#container").append(row);
-                    $("#container").append(`</div>`);
-                };
-
-                if (resto) {
-
-                    let row = $(`<div class="row">`);
-
-                    for (let j = 0; j < resto; j++) {
-                        row.append(movieCardMarkup(movies[k]));
-                        k++;
-                    }
-
-                    $("#container").append(row);
-                    $("#container").append(`</div>`);
-                }
-            }
-
-            let getMovies = () => {
-                return fetch('http://localhost:49333/api/movies')
-                    .then((res) => {
-                        return res.json();
-                    });
-            }
-
-            $(document).ready(function() {
-                addMovieCards();
-            })
-
-        </script>
-    }
+<a id="showCart">showCart</a>
+<a id="clearCart">clearCart</a>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" id="openCartButton">
+        show cart
+    </button>
 </body>
+@section scripts
+{
+    <script>
+        let cart = [];
+        let movieCardMarkup = (movie) => {
+            let cardMarkup = `
+                                <div class="col-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${movie.Name}</h5>
+                                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                            <a href="#" class="btn btn-primary addToCart">Agregar al carrito</a>
+                                            <p hidden class="movieId">${movie.Id}</p>
+                                        </div>
+                                    </div>
+                                </div>`;
+            return cardMarkup;
+        }
+
+
+        let addMovieCards = async () => {
+            let movies = await getMovies();
+
+            let veces = Math.trunc(movies.length / 4);
+            let resto = movies.length % 4;
+
+            let k = 0;
+
+            for (let i = 0; i < veces; i++) {
+
+                let row = $(`<div class="row">`);
+
+                for (let j = 0; j < 4; j++) {
+                    row.append(movieCardMarkup(movies[k]));
+                    k++;
+                }
+
+                $("#container").append(row);
+                $("#container").append(`</div>`);
+            };
+
+            if (resto) {
+
+                let row = $(`<div class="row">`);
+
+                for (let j = 0; j < resto; j++) {
+                    row.append(movieCardMarkup(movies[k]));
+                    k++;
+                }
+
+                $("#container").append(row);
+                $("#container").append(`</div>`);
+            }
+        }
+
+        let getMovies = () => {
+            return fetch('http://localhost:49333/api/movies')
+                .then((res) => {
+                    return res.json();
+                });
+        }
+
+
+        $("#closeCartButton").click(() => {
+            $('#cartModal').modal('hide');
+        });
+
+        let movieListMarkup = (movie) => {
+            let listElement = `
+                            <li class="list-group-item" id="cartElem">
+                                <span class="name">${movie.Name}</span>
+                                <p hidden class="movieId">${movie.Id}</p>
+                                <button class="btn btn-default btn-xs pull-right remove-item">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </li>`;
+            return listElement;
+        }
+        $("#showCart").click(() => {
+            let storage = localStorage.getItem("cart");
+            console.log(JSON.parse(storage));
+        });
+
+        $("#clearCart").click(() => {
+            localStorage.setItem("cart", JSON.stringify([]));
+    });
+
+        $("#openCartButton").click(() => {
+            let storage = localStorage.getItem("cart");
+
+            cart = JSON.parse(storage);
+            console.log(cart);
+            $("#cartList").empty();
+            if(cart.length != 0)
+                cart.forEach(movie => $("#cartList").append(movieListMarkup(movie)));
+            else
+                $("#cartList").append("<a>No movies added yet<a>");
+            $('#cartModal').modal('show');
+        });
+
+        /*$('#myModal').on('shown.bs.modal',
+            function() {
+                $('#myInput').trigger('focus');
+            });*/
+
+
+        $('#cartList').on('click',
+            '.list-group-item',
+            function() {
+                let id = parseInt($(this).find('.movieId').text());
+
+
+                const index = cart.findIndex(movie => {
+                    return movie.Id == id;
+                });
+
+
+                if (index > -1) {
+                    cart.splice(index, 1); // 2nd parameter means remove one item only
+                }
+                localStorage.setItem("cart", JSON.stringify(cart));
+                $(this).remove();
+            });
+
+        $(document).ready(function() {
+            addMovieCards();
+
+
+            $("#container").on("click",
+                ".addToCart",
+                function() {
+                    var addToCartButton = $(this);
+                    var newMovie = {
+                        Id: addToCartButton.siblings(".movieId").text(),
+                        Name: addToCartButton.siblings(".card-title").text()
+                    };
+                    const index = cart.findIndex(cartMovie => {
+                        return cartMovie.Id == newMovie.Id;
+                    });
+                    if(index===-1){
+                        cart.push(newMovie);
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                    }
+                });
+
+        });
+
+    </script>
+}

@@ -29,7 +29,7 @@ namespace Vidly
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap-lumen.css",
+                      "~/Content/bootstrap-lumen.css",//this breaks cards
                       "~/Content/DataTables/css/DataTables.bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/toastr.css",
