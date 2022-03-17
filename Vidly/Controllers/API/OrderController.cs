@@ -21,13 +21,11 @@ namespace Vidly.Controllers.API
             _context = new ApplicationDbContext();
         }
 
-        [HttpPost]
+       /* [HttpPost]
         public IHttpActionResult CreateOrder(OrderDto orderDto)
         {
-
-            OrderDto copy = orderDto;
-
-        var currentUserId = User.Identity.GetUserId();
+            
+            var currentUserId = User.Identity.GetUserId();
 
             var order = new Order
             {
@@ -77,7 +75,7 @@ namespace Vidly.Controllers.API
                 Console.WriteLine(e);
             }
             return Ok(order.Id);
-        }
+        }*/
 
         [HttpPut]//add auth?
         public IHttpActionResult UpdateOrder(OrderDto orderDto)

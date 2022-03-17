@@ -1,17 +1,8 @@
-﻿
+﻿@model Vidly.Models.Order
 @{
-    Layout = null;
+    ViewBag.Title = "summary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>summary</title>
-</head>
-<body>
-    <div> 
-    </div>
-</body>
-</html>
+<h2>Payment Info</h2>
+<a>@Model.Price</a>

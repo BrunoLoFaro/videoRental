@@ -11,7 +11,7 @@ namespace Vidly.DTOs
     {
         public int Id { get; set; }
 
-        public List<int> MovieIdsList { get; set; }
+        public string MovieIdsList { get; set; }//sent as a json
 
         public byte CardId { get; set; }//byte?
     }

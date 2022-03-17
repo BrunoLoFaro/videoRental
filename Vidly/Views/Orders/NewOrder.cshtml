@@ -1,24 +1,36 @@
-﻿
+﻿@model Vidly.DTOs.OrderDto
 @{
     ViewBag.Title = "NewOrder";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2>NewOrder</h2>
+<!--
 <form id="orderForm">
 
     <label>Card</label>
 
     <div id="card" class="tt-container">
-        <input id="CardId" data-rule-validCard="true" placeholder="CardId" name="card" type="text" value="" class="form-control"/>
-        <input id="CardNumber" placeholder="CardNumber" name="card" type="text" value="" class="form-control"/>
-        <input id="CardBrand" placeholder="CardBrand" name="card" type="text" value="" class="form-control"/>
-        <input id="CardCode" placeholder="CardCode" name="card" type="text" value="" class="form-control"/>
-        <input id="CardOwnerFullName" placeholder="CardOwnerFullName" name="card" type="text" value="" class="form-control"/>
-        <input id="CardExpirationDate" placeholder="CardExpirationDate" name="card" type="text" value="" class="form-control"/>
+        <input id="CardId" data-rule-validCard="true" placeholder="CardId" name="card" type="text" value="" class="form-control" />
+        <input id="CardNumber" placeholder="CardNumber" name="card" type="text" value="" class="form-control" />
+        <input id="CardBrand" placeholder="CardBrand" name="card" type="text" value="" class="form-control" />
+        <input id="CardCode" placeholder="CardCode" name="card" type="text" value="" class="form-control" />
+        <input id="CardOwnerFullName" placeholder="CardOwnerFullName" name="card" type="text" value="" class="form-control" />
+        <input id="CardExpirationDate" placeholder="CardExpirationDate" name="card" type="text" value="" class="form-control" />
     </div>
 
-    <button class="btn btn-primary">Submit</button>
-</form>
+    <button id="orderFormButton" class="btn btn-primary">Submit</button>
+</form>-->
+@using (Html.BeginForm("Save", "Orders"))
+{
+    <div class="form-group">
+        @Html.LabelFor(c => c.CardId)
+        @Html.TextBoxFor(c => c.CardId)
+        @Html.ValidationMessageFor(c => c.CardId)
+    </div>
+
+    @Html.HiddenFor(c => c.MovieIdsList,new{id="movieIdsListForm"})
+    <button type="submit" class="btn btn-primary">Save</button>
+}
 
 
 @section scripts
@@ -27,47 +39,14 @@
     <script>
         cart = JSON.parse(localStorage.getItem("cart"));
         console.log(cart);
-        var orderDto = {};
-        orderDto.MovieIdsList = cart.map(m => m.Id);
-        console.log(orderDto);
-        localStorage.setItem("cart", JSON.stringify([]));
-        $.validator.addMethod("validCard",
-            async function() {
-                var userAction = async () => {
-                    var response = await fetch('http://localhost:3000/validateCard/2');
-                    var resJson = await response.json(); //extract JSON from the http response
-                    return resJson;
-                }
-                var res = await userAction();
-                console.log(res.valid);
-                return res.valid;
-            },
-            "Please input a valid card.");
-
-        var orderForm = $("#orderForm").validate({
-            submitHandler: function() {
-                orderDto.CardId = parseInt($("#CardId").val());
-                console.log(orderDto);
-                $.ajax({
-                        url: "/api/order",
-                        method: "POST",
-                        data: JSON.stringify(orderDto),
-                        dataType: 'json',
-                        contentType: 'application/json',
-                    })
-                    .done(function(OrderId) {
-                        toastr.success("Rental successfully recorded.");
-
-                    })
-                    .fail(function() {
-                        toastr.error("Something unexpected happened.");
-                    });
-                return false;
-            }
-
-        });
-
-
+        var movieIdList = [];
+        movieIdList = cart.map(m => m.Id);
+        let str = JSON.stringify(movieIdList);
+        let par = JSON.parse(str);
+        console.log(str);
+        console.log(par);
+        $("#movieIdsListForm").val(str);
+        //console.log("ready");
     </script>
 
 }
