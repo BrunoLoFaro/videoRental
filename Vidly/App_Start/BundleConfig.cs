@@ -8,6 +8,10 @@ namespace Vidly
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/movies").Include(
+                "~/Scripts/movies.js"));
+            bundles.Add(new ScriptBundle("~/bundles/cart").Include(
+                "~/Scripts/cart.js"));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/DataTables/jquery.dataTables.js",
@@ -23,15 +27,16 @@ namespace Vidly
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap.min.js",
                       "~/Scripts/bootbox.js",
                       "~/Scripts/toastr.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap-lumen.css",//this breaks cards
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/NavBarR.css",
                       "~/Content/DataTables/css/DataTables.bootstrap.css",
-                      "~/Content/site.css",
+                      "~/Content/font-awesome.min.css",
                       "~/Content/toastr.css",
                       "~/Content/typeahead.css"));
         }

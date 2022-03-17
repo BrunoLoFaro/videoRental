@@ -1,20 +1,33 @@
-﻿<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("Vidly", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
-                <li>@Html.ActionLink("Movies", "Index", "Movies")</li>
-            </ul>
-            @Html.Partial("_LoginPartial")
-        </div>
+﻿<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        @Html.ActionLink("RdxMovies", "Index", "Home", null, new { @class = "navbar-brand" })
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                @Html.ActionLink("Movies", "Index", "Movies", null, new { @class = "nav-link" })
+            </li>
+        </ul>
+        <ul class="navbar-navR">
+            <li class="nav-item active">
+                <a class="nav-link fa fa-shopping-cart"  style="font-size:30px" id="openCartButton"></a>
+            </li>
+        </ul>
+        @Html.Partial("_LoginPartial")
     </div>
-</div>
+</nav>
+<script>
+    $("#openCartButton").click(() => {
+        let storage = localStorage.getItem("cart");
 
+        cart = JSON.parse(storage);
+        console.log(cart);
+        $("#cartList").empty();
+        if(cart.length != 0)
+            cart.forEach(movie => $("#cartList").append(movieListMarkup(movie)));
+        else
+            $("#cartList").append("<a>No movies added yet<a>");
+        $('#cartModal').modal('show');
+    });
+</script>

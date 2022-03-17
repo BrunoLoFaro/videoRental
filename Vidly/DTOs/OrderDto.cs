@@ -13,6 +13,6 @@ namespace Vidly.DTOs
 
         public List<int> MovieIdsList { get; set; }
 
-        public byte CardId { get; set; }
+        public byte CardId { get; set; }//byte?
     }
 }

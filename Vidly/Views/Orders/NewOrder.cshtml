@@ -25,30 +25,39 @@
 {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        var orderDto = JSON.parse(localStorage.getItem("orderDto"));
+        cart = JSON.parse(localStorage.getItem("cart"));
+        console.log(cart);
+        var orderDto = {};
+        orderDto.MovieIdsList = cart.map(m => m.Id);
         console.log(orderDto);
-        $.validator.addMethod("validCard", async function () {
-            var userAction = async () => {
-                var response = await fetch('http://localhost:3000/validateCard/2');
-                var resJson = await response.json(); //extract JSON from the http response
-                return resJson;
-            }
-            var res = await userAction();
-            console.log(res.valid);
-            return res.valid;
-        }, "Please input a valid card.");
+        localStorage.setItem("cart", JSON.stringify([]));
+        $.validator.addMethod("validCard",
+            async function() {
+                var userAction = async () => {
+                    var response = await fetch('http://localhost:3000/validateCard/2');
+                    var resJson = await response.json(); //extract JSON from the http response
+                    return resJson;
+                }
+                var res = await userAction();
+                console.log(res.valid);
+                return res.valid;
+            },
+            "Please input a valid card.");
 
         var orderForm = $("#orderForm").validate({
-            submitHandler: function () {
-                orderDto.CardId = $("#CardId").val();
+            submitHandler: function() {
+                orderDto.CardId = parseInt($("#CardId").val());
                 console.log(orderDto);
                 $.ajax({
                         url: "/api/order",
                         method: "POST",
-                        data: orderDto
+                        data: JSON.stringify(orderDto),
+                        dataType: 'json',
+                        contentType: 'application/json',
                     })
-                    .done(function (OrderId) {
+                    .done(function(OrderId) {
                         toastr.success("Rental successfully recorded.");
+
                     })
                     .fail(function() {
                         toastr.error("Something unexpected happened.");
@@ -57,7 +66,7 @@
             }
 
         });
-        
+
 
     </script>
 
