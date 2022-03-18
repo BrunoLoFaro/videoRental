@@ -324,6 +324,7 @@
     <Compile Include="ViewModels\NewMovieViewModel.cs" />
     <Compile Include="ViewModels\RandomMovieViewModel.cs" />
     <Compile Include="ViewModels\RentalViewModel.cs" />
+    <Compile Include="ViewModels\summaryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />

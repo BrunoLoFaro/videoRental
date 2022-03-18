@@ -9,6 +9,7 @@ using System.Web.Script.Serialization;
 using Microsoft.AspNet.Identity;
 using Vidly.DTOs;
 using Vidly.Models;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
@@ -88,7 +89,15 @@ namespace Vidly.Controllers
             {
                 Console.WriteLine(e);
             }
-            return View("summary",order);
+
+            var viewModel = new summaryViewModel
+            {
+                UserName = User.Identity.GetUserName(),
+                MovieList = movies,
+                Order = order
+            };
+
+            return View("summary", viewModel);
         }
     }
 }

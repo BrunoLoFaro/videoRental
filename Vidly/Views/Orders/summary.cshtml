@@ -1,8 +1,17 @@
-﻿@model Vidly.Models.Order
+﻿@model Vidly.ViewModels.summaryViewModel
 @{
     ViewBag.Title = "summary";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Payment Info</h2>
-<a>@Model.Price</a>
+<p>Order number: @Model.Order.Id</p>
+<p>User: @Model.UserName</p>
+@foreach (var movie in Model.MovieList)
+{
+    <p>Movie: @movie.Name Price: @movie.Price</p>
+}
+<p>Total $@Model.Order.Price</p>
+<script>
+    localStorage.setItem("cart", JSON.stringify([]));
+</script>
