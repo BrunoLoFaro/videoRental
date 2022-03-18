@@ -3,11 +3,12 @@ let movieCardMarkup = (movie) => {
     let cardMarkup = `
                                 <div class="col-3">
                                     <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">${movie.Name}</h5>
-                                            <p class="card-text">Movie description</p>
-                                            <i class="fa fa-plus addToCart" aria-hidden="true"></i>
-                                            <p hidden class="movieId">${movie.Id}</p>
+                                        <img class="card-img-top" src="..." alt="Card image cap">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${movie.Name}</h5>
+                                                <p class="card-text">Movie description</p>
+                                                <i class="fa fa-plus addToCart" aria-hidden="true"></i>
+                                                <p hidden class="movieId">${movie.Id}</p>
                                         </div>
                                     </div>
                                 </div>`;

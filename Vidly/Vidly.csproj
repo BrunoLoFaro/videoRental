@@ -307,6 +307,10 @@
     <Compile Include="Migrations\202203132229013_OrderIdInt.Designer.cs">
       <DependentUpon>202203132229013_OrderIdInt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203181657010_AddedMovieImageUrl.cs" />
+    <Compile Include="Migrations\202203181657010_AddedMovieImageUrl.Designer.cs">
+      <DependentUpon>202203181657010_AddedMovieImageUrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -711,6 +715,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203132229013_OrderIdInt.resx">
       <DependentUpon>202203132229013_OrderIdInt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203181657010_AddedMovieImageUrl.resx">
+      <DependentUpon>202203181657010_AddedMovieImageUrl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
