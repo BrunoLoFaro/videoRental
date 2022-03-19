@@ -7,10 +7,10 @@ let movieCardMarkup = (movie) => {
                 <h5 class="card-title">${movie.Name}</h5>
                 <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
             </div>
-            <div class="card-footer" style="display: flex">
+            <div class="card-footer">
                 <small class="moviePrice">$${movie.Price}</small>
                 <small hidden class="movieId">${movie.Id}</small>
-                <i class="fa fa-plus addToCart" style="align-self: center;" aria-hidden="true"></i>
+                <i class="fa fa-plus addToCart" style="float:right; font-size: 1.73em;" aria-hidden="true"></i>
             </div>
         </div>`;
     return cardMarkup;
