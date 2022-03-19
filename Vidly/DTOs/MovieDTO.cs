@@ -21,5 +21,9 @@ namespace Vidly.DTOs
         public byte NumberInStock { get; set; }
 
         public byte NumberAvailable { get; set; }
+
+        public int Price { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }

@@ -1,17 +1,18 @@
 ﻿
 let movieCardMarkup = (movie) => {
     let cardMarkup = `
-                                <div class="col-3">
-                                    <div class="card">
-                                        <img class="card-img-top" src="..." alt="Card image cap">
-                                            <div class="card-body">
-                                                <h5 class="card-title">${movie.Name}</h5>
-                                                <p class="card-text">Movie description</p>
-                                                <i class="fa fa-plus addToCart" aria-hidden="true"></i>
-                                                <p hidden class="movieId">${movie.Id}</p>
-                                        </div>
-                                    </div>
-                                </div>`;
+        <div class="card">
+            <img class="card-img-top" src="../${movie.ImageUrl}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">${movie.Name}</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+            </div>
+            <div class="card-footer" style="display: flex">
+                <small class="moviePrice">$${movie.Price}</small>
+                <small hidden class="movieId">${movie.Id}</small>
+                <i class="fa fa-plus addToCart" style="align-self: center;" aria-hidden="true"></i>
+            </div>
+        </div>`;
     return cardMarkup;
 }
 
@@ -24,36 +25,49 @@ function validateForm() {
 
 let addMovieCards = async () => {
     let movies = await getMovies();
-
-    let veces = Math.trunc(movies.length / 4);
-    let resto = movies.length % 4;
+    console.log(movies);
+    const COLS = 3;
+    let times = Math.trunc(movies.length / COLS);
+    let rest = movies.length % COLS;
+    let fill = COLS - rest;
 
     let k = 0;
 
-    for (let i = 0; i < veces; i++) {
+    for (let i = 0; i < times; i++) {
 
         let row = $(`<div class="row">`);
+        let deck = $(`<div class="card-deck">`);
 
-        for (let j = 0; j < 4; j++) {
-            row.append(movieCardMarkup(movies[k]));
+        for (let j = 0; j < COLS; j++) {
+            deck.append(movieCardMarkup(movies[k]));
             k++;
         }
 
+        deck.append(`</div>`);
+        row.append(deck);
+        row.append(`</div>`);
         $("#container").append(row);
-        $("#container").append(`</div>`);
     };
 
-    if (resto) {
+    if (rest) {
 
         let row = $(`<div class="row">`);
+        let deck = $(`<div class="card-deck">`);
 
-        for (let j = 0; j < resto; j++) {
-            row.append(movieCardMarkup(movies[k]));
+        for (let j = 0; j < rest; j++) {
+            deck.append(movieCardMarkup(movies[k]));
             k++;
         }
 
+        for (let j = 0; j < fill; j++) {
+            deck.append(`<div class="card" style="visibility:hidden;"></div>`);
+            k++;
+        }
+
+        deck.append(`</div>`);
+        row.append(deck);
+        row.append(`</div>`);
         $("#container").append(row);
-        $("#container").append(`</div>`);
     }
 }
 
@@ -76,7 +90,8 @@ $(document).ready(function () {
             var addToCartButton = $(this);
             var newMovie = {
                 Id: parseInt(addToCartButton.siblings(".movieId").text()),
-                Name: addToCartButton.siblings(".card-title").text()
+                Name: addToCartButton.parent().siblings(".card-body").find(".card-title").text(),
+                Price: addToCartButton.siblings(".moviePrice").text()
             };
             const index = cart.findIndex(cartMovie => {
                 return cartMovie.Id == newMovie.Id;
@@ -84,6 +99,7 @@ $(document).ready(function () {
 
             if (index === -1) {
                 cart.push(newMovie);
+                cart.Total += newMovie.Price;
                 localStorage.setItem("cart", JSON.stringify(cart));
                 toastr.success("Movie added to Cart.");
             }

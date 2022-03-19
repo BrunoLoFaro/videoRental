@@ -7,30 +7,30 @@ $("#closeCartButton").click(() => {
 let movieListMarkup = (movie) => {
     let listElement = `
                             <li class="list-group-item" id="cartElem">
+                                <i class="fa fa-times" aria-hidden="true"></i>
                                 <span class="name">${movie.Name}</span>
+                                <span style="float:right;" class="price">${movie.Price}</span>
                                 <p hidden class="movieId">${movie.Id}</p>
-                                <button class="btn btn-default btn-xs pull-right remove-item">
-                                    <i class="icon-remove">x</i>
-                                </button>
                             </li>`;
     return listElement;
 }
 $("#openCartButton").click(() => {
     let storage = localStorage.getItem("cart");
-
     cart = JSON.parse(storage);
-    console.log(cart);
     $("#cartList").empty();
-    if (cart.length != 0)
+    if (cart.length != 0) {
         cart.forEach(movie => $("#cartList").append(movieListMarkup(movie)));
+            $("#total").text(cart.Total);
+    }
     else
         $("#cartList").append("<a>No movies added yet<a>");
     $('#cartModal').modal('show');
 });
 $('#cartList').on('click',
-    '.list-group-item',
+    '.list-group-item .fa',
     function () {
-        let id = parseInt($(this).find('.movieId').text());
+        let id = parseInt($(this).siblings('.movieId').text());
+        let price = parseInt($(this).siblings('.price').text());
 
 
         const index = cart.findIndex(movie => {
@@ -39,8 +39,9 @@ $('#cartList').on('click',
 
 
         if (index > -1) {
-            cart.splice(index, 1); // 2nd parameter means remove one item only
+            cart.splice(index, 1);
+            cart.Total -= price;
         }
         localStorage.setItem("cart", JSON.stringify(cart));
-        $(this).remove();
+        $(this).parent().remove();
     });

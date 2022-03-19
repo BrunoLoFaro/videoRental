@@ -33,7 +33,7 @@ namespace Vidly
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.min.css",
+                      //"~/Content/bootstrap.min.css",
                       "~/Content/NavBarR.css",
                       "~/Content/DataTables/css/DataTables.bootstrap.css",
                       "~/Content/font-awesome.min.css",
