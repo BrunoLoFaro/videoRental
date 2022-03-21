@@ -39,14 +39,11 @@
     <script>
         cart = JSON.parse(localStorage.getItem("cart"));
         console.log(cart);
+        console.log(cart.length);
         var movieIdList = [];
-        movieIdList = cart.map(m => m.Id);
+        movieIdList = cart.MovieList.map(m => m.Id);
         let str = JSON.stringify(movieIdList);
-        let par = JSON.parse(str);
-        console.log(str);
-        console.log(par);
         $("#movieIdsListForm").val(str);
-        //console.log("ready");
     </script>
 
 }

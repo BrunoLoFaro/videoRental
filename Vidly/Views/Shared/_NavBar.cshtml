@@ -17,17 +17,3 @@
         @Html.Partial("_LoginPartial")
     </div>
 </nav>
-<script>
-    $("#openCartButton").click(() => {
-        let storage = localStorage.getItem("cart");
-
-        cart = JSON.parse(storage);
-        console.log(cart);
-        $("#cartList").empty();
-        if(cart.length != 0)
-            cart.forEach(movie => $("#cartList").append(movieListMarkup(movie)));
-        else
-            $("#cartList").append("<a>No movies added yet<a>");
-        $('#cartModal').modal('show');
-    });
-</script>

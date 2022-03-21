@@ -17,7 +17,7 @@ let movieCardMarkup = (movie) => {
 }
 
 function validateForm() {
-    if(cart.length>0)
+    if(cart.MovieList.length>0)
         return true;
     toastr.error("select at least one film");
     return false;
@@ -25,7 +25,6 @@ function validateForm() {
 
 let addMovieCards = async () => {
     let movies = await getMovies();
-    console.log(movies);
     const COLS = 3;
     let times = Math.trunc(movies.length / COLS);
     let rest = movies.length % COLS;
@@ -83,22 +82,34 @@ let getMovies = () => {
 $(document).ready(function () {
     addMovieCards();
     toastr.options.timeOut = 15;
-
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    console.log(cart);
+    if (cart == null || cart.length == 0) {
+        cart =
+        {
+            Total: 0,
+            MovieList: []
+        };
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }
+    console.log(cart);
     $("#container").on("click",
         ".addToCart",
         function () {
+            cart = JSON.parse(localStorage.getItem("cart"));
+            console.log(cart);
             var addToCartButton = $(this);
             var newMovie = {
                 Id: parseInt(addToCartButton.siblings(".movieId").text()),
                 Name: addToCartButton.parent().siblings(".card-body").find(".card-title").text(),
-                Price: addToCartButton.siblings(".moviePrice").text()
+                Price: parseInt(addToCartButton.parent().find('.moviePrice').text().substring(1))
             };
-            const index = cart.findIndex(cartMovie => {
+            const index = cart.MovieList.findIndex(cartMovie => {
                 return cartMovie.Id == newMovie.Id;
             });
 
             if (index === -1) {
-                cart.push(newMovie);
+                cart.MovieList.push(newMovie);
                 cart.Total += newMovie.Price;
                 localStorage.setItem("cart", JSON.stringify(cart));
                 toastr.success("Movie added to Cart.");
