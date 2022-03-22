@@ -20,11 +20,11 @@
 
     <button id="orderFormButton" class="btn btn-primary">Submit</button>
 </form>-->
-@using (Html.BeginForm("Save", "Orders"))
+@using (Html.BeginForm("Save", "Orders", FormMethod.Post, new { id = "orderForm" }))
 {
     <div class="form-group">
         @Html.LabelFor(c => c.CardId)
-        @Html.TextBoxFor(c => c.CardId)
+        @Html.TextBoxFor(c => c.CardId,new{id="cardIdTextBox"})
         @Html.ValidationMessageFor(c => c.CardId)
     </div>
 
@@ -37,13 +37,44 @@
 {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        cart = JSON.parse(localStorage.getItem("cart"));
-        console.log(cart);
-        console.log(cart.length);
-        var movieIdList = [];
-        movieIdList = cart.MovieList.map(m => m.Id);
-        let str = JSON.stringify(movieIdList);
-        $("#movieIdsListForm").val(str);
+        function validatePaymentInfo() {
+            let num = parseInt($('#cardIdTextBox').val());
+            console.log(num);
+            if (num == 8)
+                return false;
+            return true;
+        }
+
+        function validateCart() {
+            cart = JSON.parse(localStorage.getItem("cart"));
+            console.log(cart);
+            console.log(cart.Total);
+            var movieIdList = [];
+
+            if (!cart || cart.length == 0 || cart.MovieList.length == 0)
+                return false;
+
+            movieIdList = cart.MovieList.map(m => m.Id);
+            let str = JSON.stringify(movieIdList);
+            console.log(movieIdList);
+            $("#movieIdsListForm").val(str);
+            return true;
+        }
+
+        $('#orderForm').submit(function () {
+
+            if (!validateCart()){
+                toastr.error('No movies selected.');
+                return false;
+            } 
+
+            if (!validatePaymentInfo()){
+                toastr.error('Incorrect card.');
+                return false;
+            } 
+            return true;
+        });
+
     </script>
 
 }
