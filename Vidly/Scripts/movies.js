@@ -2,7 +2,9 @@
 let movieCardMarkup = (movie) => {
     let cardMarkup = `
         <div class="card">
-            <img class="card-img-top" src="../${movie.ImageUrl}" alt="Card image cap">
+            <div style="width:100%; height:60%;">
+                <img  style="width: 100%;height: 100%; max-height:100%;" src="../${movie.ImageUrl}" alt="Card image cap">
+            </div>
             <div class="card-body">
                 <h5 class="card-title">${movie.Name}</h5>
                 <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
@@ -10,7 +12,7 @@ let movieCardMarkup = (movie) => {
             <div class="card-footer">
                 <small class="moviePrice">$${movie.Price}</small>
                 <small hidden class="movieId">${movie.Id}</small>
-                <i class="fa fa-plus addToCart" style="float:right; font-size: 1.73em;" aria-hidden="true"></i>
+                <i class="fa fa-plus addToCart grow" style="cursor: pointer;float:right; font-size: 1.73em;" aria-hidden="true"></i>
             </div>
         </div>`;
     return cardMarkup;

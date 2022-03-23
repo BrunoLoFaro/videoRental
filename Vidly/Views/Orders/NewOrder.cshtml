@@ -37,18 +37,32 @@
 {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        function validatePaymentInfo() {
+        async function validatePaymentInfo() {
             let num = parseInt($('#cardIdTextBox').val());
-            console.log(num);
-            if (num == 8)
+            //console.log(num);
+            //console.log(num.toString().length);
+            return false;
+            /*if (num.toString().length < 16)
                 return false;
-            return true;
+
+            let res = fetch('https://localhost:8080/card/',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(num)
+            });
+            res.then(r => {
+                console.log(r);
+            });
+            return false;*/
         }
 
         function validateCart() {
             cart = JSON.parse(localStorage.getItem("cart"));
-            console.log(cart);
-            console.log(cart.Total);
+            //console.log(cart);
+            //console.log(cart.Total);
             var movieIdList = [];
 
             if (!cart || cart.length == 0 || cart.MovieList.length == 0)
@@ -56,23 +70,31 @@
 
             movieIdList = cart.MovieList.map(m => m.Id);
             let str = JSON.stringify(movieIdList);
-            console.log(movieIdList);
+            //console.log(movieIdList);
             $("#movieIdsListForm").val(str);
             return true;
         }
 
-        $('#orderForm').submit(function () {
-
-            if (!validateCart()){
+        async function validation() {
+            if (!validateCart()) {
                 toastr.error('No movies selected.');
                 return false;
-            } 
-
-            if (!validatePaymentInfo()){
+            }
+            let res = await validatePaymentInfo();
+            console.log(res);
+            /*if (!res) {
+                console.log("in");
                 toastr.error('Incorrect card.');
                 return false;
-            } 
-            return true;
+            }*/
+            //$('#orderForm').submit;
+            return false;
+
+        }
+        $('#orderForm').submit(function () {
+            validation(this);
+            return false;
+            
         });
 
     </script>
