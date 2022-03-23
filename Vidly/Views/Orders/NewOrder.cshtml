@@ -35,34 +35,37 @@
 
 @section scripts
 {
-    @Scripts.Render("~/bundles/jqueryval")
     <script>
+        function validateCardNumLength() {
+            let num = parseInt($('#cardIdTextBox').val());
+            if (!num)
+                return false;
+            if (num.toString().length < 3)
+                return false;
+            return true;
+        }
+
         async function validatePaymentInfo() {
             let num = parseInt($('#cardIdTextBox').val());
-            //console.log(num);
-            //console.log(num.toString().length);
-            return false;
-            /*if (num.toString().length < 16)
-                return false;
+            let data = {
+                Id: num,
+                Price: 1200
+            };
+            const res = await fetch('http://localhost:8080/card/',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+            const resJson = await res.json();
+            return resJson;
+        };
 
-            let res = fetch('https://localhost:8080/card/',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(num)
-            });
-            res.then(r => {
-                console.log(r);
-            });
-            return false;*/
-        }
 
         function validateCart() {
             cart = JSON.parse(localStorage.getItem("cart"));
-            //console.log(cart);
-            //console.log(cart.Total);
             var movieIdList = [];
 
             if (!cart || cart.length == 0 || cart.MovieList.length == 0)
@@ -70,7 +73,6 @@
 
             movieIdList = cart.MovieList.map(m => m.Id);
             let str = JSON.stringify(movieIdList);
-            //console.log(movieIdList);
             $("#movieIdsListForm").val(str);
             return true;
         }
@@ -80,23 +82,26 @@
                 toastr.error('No movies selected.');
                 return false;
             }
-            let res = await validatePaymentInfo();
-            console.log(res);
-            /*if (!res) {
-                console.log("in");
+            if (!validateCardNumLength()) {
+                toastr.error('The card id must be numeric 16 digits.');
+                return false;
+            }
+            const res = await validatePaymentInfo();
+
+            if (!res.valid) {
                 toastr.error('Incorrect card.');
                 return false;
-            }*/
-            //$('#orderForm').submit;
-            return false;
-
+            }
+            return true;
         }
-        $('#orderForm').submit(function () {
-            validation(this);
-            return false;
-            
+
+        $('#orderForm').submit(function(e) {
+            e.preventDefault();
+            validation(this)
+                .then(res => {
+                    if (res)
+                        this.submit();
+                });
         });
-
     </script>
-
 }
