@@ -40,16 +40,17 @@
             let num = parseInt($('#cardIdTextBox').val());
             if (!num)
                 return false;
-            if (num.toString().length < 3)
+            if (num.toString().length != 12)
                 return false;
             return true;
         }
 
         async function validatePaymentInfo() {
             let num = parseInt($('#cardIdTextBox').val());
+            cart = JSON.parse(localStorage.getItem("cart"));
             let data = {
                 Id: num,
-                Price: 1200
+                Price: cart.Total
             };
             const res = await fetch('http://localhost:8080/card/',
                 {
@@ -83,13 +84,13 @@
                 return false;
             }
             if (!validateCardNumLength()) {
-                toastr.error('The card id must be numeric 16 digits.');
+                toastr.error('The card id must be numeric 12 digits.');
                 return false;
             }
             const res = await validatePaymentInfo();
 
             if (!res.valid) {
-                toastr.error('Incorrect card.');
+                toastr.error(res.error);
                 return false;
             }
             return true;
