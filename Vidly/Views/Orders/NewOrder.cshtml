@@ -101,6 +101,7 @@
             validation(this)
                 .then(res => {
                     if (res)
+                        emptyCart();
                         this.submit();
                 });
         });

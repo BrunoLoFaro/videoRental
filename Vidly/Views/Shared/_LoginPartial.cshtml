@@ -9,7 +9,7 @@
         <li>
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new {@class= "nav-link" })
         </li>
-        <li><a class= "nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        <li><a class= "nav-link" id="logOffButon" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
     }
 }
@@ -20,3 +20,10 @@ else
         <li><a class="nav-link"><span class="glyphicon glyphicon-log-in">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</span></a></li>
     </ul>
 }
+<script>
+
+    $("#logOffButon").click(()=> {
+        emptyCart();
+    })
+
+</script>

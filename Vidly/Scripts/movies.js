@@ -84,17 +84,7 @@ let getMovies = () => {
 $(document).ready(function () {
     addMovieCards();
     toastr.options.timeOut = 15;
-    let cart = JSON.parse(localStorage.getItem("cart"));
-    console.log(cart);
-    if (cart == null || cart.length == 0) {
-        cart =
-        {
-            Total: 0,
-            MovieList: []
-        };
-        localStorage.setItem("cart", JSON.stringify(cart));
-    }
-    console.log(cart);
+    let cart = getCart();
     $("#container").on("click",
         ".addToCart",
         function () {

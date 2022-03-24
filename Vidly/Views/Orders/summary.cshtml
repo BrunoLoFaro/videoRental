@@ -12,6 +12,9 @@
     <p>Movie: @movie.Name Price: @movie.Price</p>
 }
 <p>Total $@Model.Order.Price</p>
-<script>
-    localStorage.setItem("cart", JSON.stringify([]));
-</script>
+@section scripts
+{
+    <script>
+        emptyCart();
+    </script>
+}

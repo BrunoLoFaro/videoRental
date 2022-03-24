@@ -1,22 +1,44 @@
 ﻿let cart = [];
-
+function getCart() {
+    let cartString = localStorage.getItem("cart");
+    let cart;
+    if (cartString == undefined) {
+        cart =
+        {
+            Total: 0,
+            MovieList: []
+        };
+        localStorage.setItem("cart", JSON.stringify(cart));
+    } else {
+        cart = JSON.parse(cartString);
+    }
+    return cart;
+}
+function emptyCart() {
+    let cart =
+    {
+        Total: 0,
+        MovieList: []
+    };
+    localStorage.setItem("cart", JSON.stringify(cart));
+    return cart;
+}
 $("#closeCartButton").click(() => {
     $('#cartModal').modal('hide');
 });
 
 let movieListMarkup = (movie) => {
     let listElement = `
-                            <li class="list-group-item" id="cartElem">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                                <span class="name">${movie.Name}</span>
-                                <span style="float:right;" class="price">$${movie.Price}</span>
-                                <p hidden class="movieId">${movie.Id}</p>
-                            </li>`;
+                    <li class="list-group-item" id="cartElem">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                        <span class="name">${movie.Name}</span>
+                        <span style="float:right;" class="price">$${movie.Price}</span>
+                        <p hidden class="movieId">${movie.Id}</p>
+                    </li>`;
     return listElement;
 }
 $("#openCartButton").click(() => {
-    let storage = localStorage.getItem("cart");
-    cart = JSON.parse(storage);
+    cart = getCart();
     $("#cartList").empty();
     if (cart.MovieList.length != 0) {
         cart.MovieList.forEach(movie => {
