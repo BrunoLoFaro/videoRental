@@ -57,7 +57,25 @@ namespace Vidly.Controllers.API
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
-                await client.GetAsync("");
+                PaymentResponse response;
+                PaymentResponse respuesta = new PaymentResponse(false,"failed to fetch");
+                HttpResponseMessage Res = await client.GetAsync("");
+                if (Res.IsSuccessStatusCode)
+                {
+                    //Storing the response details recieved from web api   
+                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
+
+                    //Deserializing the response recieved from web api and storing into the Employee list  
+                    response = JsonConvert.DeserializeObject<PaymentResponse>(EmpResponse);
+                }
+                else
+                {
+                    response = respuesta;
+                }
+
+                int a = 2;
+                int b = 2;
+                int c = 2;
             }
             using (var client2 = new HttpClient())
             {
