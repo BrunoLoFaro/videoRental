@@ -27,22 +27,7 @@ namespace Vidly.Controllers.API
         {
             _context = new ApplicationDbContext();
         }
-        /*public void func(Res)
-        {
-            if (Res.IsSuccessStatusCode)
-            {
-                //Storing the response details recieved from web api   
-                var EmpResponse = Res.Content.ReadAsStringAsync().Result;
 
-                //Deserializing the response recieved from web api and storing into the Employee list  
-                response = JsonConvert.DeserializeObject<PaymentResponse>(EmpResponse);
-
-            }
-            else
-            {
-                response = respuesta;
-            }
-        }*/
         [HttpGet]
         public async Task myFunc()
         {
@@ -60,7 +45,7 @@ namespace Vidly.Controllers.API
 
                 //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
                 PaymentResponse response;
-                PaymentResponse respuesta = new PaymentResponse(false,"failed to fetch");
+                PaymentResponse defResponse = new PaymentResponse(false,"failed to fetch");
                 try
                 {
                     HttpResponseMessage Res = await client.GetAsync("");
@@ -74,7 +59,7 @@ namespace Vidly.Controllers.API
                     }
                     else
                     {
-                        response = respuesta;
+                        response = defResponse;
                     }
                 }
                 catch (Exception e)
