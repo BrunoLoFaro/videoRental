@@ -56,39 +56,31 @@ namespace Vidly.Controllers.API
                 //Define request data format  
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                client.Timeout = TimeSpan.FromMilliseconds(100);
+
                 //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
                 PaymentResponse response;
                 PaymentResponse respuesta = new PaymentResponse(false,"failed to fetch");
-                HttpResponseMessage Res = await client.GetAsync("");
-                if (Res.IsSuccessStatusCode)
+                try
                 {
-                    //Storing the response details recieved from web api   
-                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
+                    HttpResponseMessage Res = await client.GetAsync("");
+                    if (Res.IsSuccessStatusCode)
+                    {
+                        //Storing the response details recieved from web api   
+                        var EmpResponse = Res.Content.ReadAsStringAsync().Result;
 
-                    //Deserializing the response recieved from web api and storing into the Employee list  
-                    response = JsonConvert.DeserializeObject<PaymentResponse>(EmpResponse);
+                        //Deserializing the response recieved from web api and storing into the Employee list  
+                        response = JsonConvert.DeserializeObject<PaymentResponse>(EmpResponse);
+                    }
+                    else
+                    {
+                        response = respuesta;
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    response = respuesta;
+                    Console.WriteLine($"exception{e}");
                 }
-
-                int a = 2;
-                int b = 2;
-                int c = 2;
-            }
-            using (var client2 = new HttpClient())
-            {
-                string Baseurl2 = "http://localhost:8080/card/second";
-                //Passing service base url  
-                client2.BaseAddress = new Uri(Baseurl2);
-
-                client2.DefaultRequestHeaders.Clear();
-                //Define request data format  
-                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
-                await client2.GetAsync("");
             }
         }
 
