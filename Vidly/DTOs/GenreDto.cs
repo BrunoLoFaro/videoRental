@@ -9,10 +9,5 @@ namespace Vidly.Dtos
     {
         public byte Id { get; set; }
         public string Name { get; set; }
-        public GenreDto(byte id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
     }
 }

@@ -203,6 +203,7 @@
     <Compile Include="DTOs\MembershipTypeDto.cs" />
     <Compile Include="DTOs\MovieDTO.cs" />
     <Compile Include="DTOs\OrderDto.cs" />
+    <Compile Include="DTOs\PaymentResponse.cs" />
     <Compile Include="DTOs\RentalDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

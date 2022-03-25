@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Common.EntitySql;
 using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
@@ -24,15 +27,28 @@ namespace Vidly.Controllers.API
         {
             _context = new ApplicationDbContext();
         }
-
-        [HttpPost]
-        public async Task<IHttpActionResult> CreateOrder()
+        /*public void func(Res)
         {
-            GenreDto response;
-            GenreDto respuesta = new GenreDto(2, "romance");
+            if (Res.IsSuccessStatusCode)
+            {
+                //Storing the response details recieved from web api   
+                var EmpResponse = Res.Content.ReadAsStringAsync().Result;
+
+                //Deserializing the response recieved from web api and storing into the Employee list  
+                response = JsonConvert.DeserializeObject<PaymentResponse>(EmpResponse);
+
+            }
+            else
+            {
+                response = respuesta;
+            }
+        }*/
+        [HttpGet]
+        public async Task myFunc()
+        {
             using (var client = new HttpClient())
             {
-                string Baseurl = "http://localhost:8080/card";
+                string Baseurl = "http://localhost:8080/card/first";
                 //Passing service base url  
                 client.BaseAddress = new Uri(Baseurl);
 
@@ -41,24 +57,28 @@ namespace Vidly.Controllers.API
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
-                HttpResponseMessage Res = await client.GetAsync("");
-
-                //Checking the response is successful or not which is sent using HttpClient  
-                if (Res.IsSuccessStatusCode)
-                {
-                    //Storing the response details recieved from web api   
-                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
-
-                    //Deserializing the response recieved from web api and storing into the Employee list  
-                    response = JsonConvert.DeserializeObject<GenreDto>(EmpResponse);
-
-                }
-                else
-                {
-                    response = respuesta;
-                }
+                await client.GetAsync("");
             }
-            return Ok(response);
+            using (var client2 = new HttpClient())
+            {
+                string Baseurl2 = "http://localhost:8080/card/second";
+                //Passing service base url  
+                client2.BaseAddress = new Uri(Baseurl2);
+
+                client2.DefaultRequestHeaders.Clear();
+                //Define request data format  
+                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
+                await client2.GetAsync("");
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult CreateOrder()
+        {
+            Task.Run(myFunc);
+            return Ok();
         }
         /* [HttpPost]
          public IHttpActionResult CreateOrder(OrderDto orderDto)
