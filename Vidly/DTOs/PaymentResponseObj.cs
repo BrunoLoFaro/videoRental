@@ -5,12 +5,12 @@ using System.Web;
 
 namespace Vidly.DTOs
 {
-    public class PaymentResponse
+    public class PaymentResponseObj
     {
         public bool Valid { get; set; }
         public string Error { get; set; }
 
-        public PaymentResponse(bool valid, string error)
+        public PaymentResponseObj(bool valid, string error)
         {
             Valid = valid;
             Error = error;

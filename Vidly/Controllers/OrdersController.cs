@@ -104,8 +104,8 @@ namespace Vidly.Controllers
 
             using (var client = new HttpClient())
             {
-                PaymentResponse response;
-                PaymentResponse respuesta = new PaymentResponse(false,"failed to fetch");
+                PaymentResponseObj response;
+                PaymentResponseObj respuesta = new PaymentResponseObj(false,"failed to fetch");
                 string Baseurl = "http://localhost:8080/card/payment";
                 //Passing service base url  
                 client.BaseAddress = new Uri(Baseurl);
@@ -124,7 +124,7 @@ namespace Vidly.Controllers
                     var EmpResponse = Res.Content.ReadAsStringAsync().Result;
 
                     //Deserializing the response recieved from web api and storing into the Employee list  
-                    response = JsonConvert.DeserializeObject<PaymentResponse>(EmpResponse);
+                    response = JsonConvert.DeserializeObject<PaymentResponseObj>(EmpResponse);
                 }
                 else
                 {
