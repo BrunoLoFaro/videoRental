@@ -18,7 +18,7 @@ namespace Vidly.Models
 
         public int Price { get; set; }
 
-        public byte CardId { get; set; }
+        public long CardId { get; set; }
 
         public bool IsValid { get; set; }
     }

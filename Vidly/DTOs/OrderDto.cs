@@ -13,6 +13,6 @@ namespace Vidly.DTOs
 
         public string MovieIdsList { get; set; }//sent as a json
 
-        public byte CardId { get; set; }//byte?
+        public long CardId { get; set; }//byte?
     }
 }

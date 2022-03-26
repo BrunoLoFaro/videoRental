@@ -335,6 +335,14 @@
     <Compile Include="Migrations\202203181657010_AddedMovieImageUrl.Designer.cs">
       <DependentUpon>202203181657010_AddedMovieImageUrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203260210125_DeleteOrderCardId.cs" />
+    <Compile Include="Migrations\202203260210125_DeleteOrderCardId.Designer.cs">
+      <DependentUpon>202203260210125_DeleteOrderCardId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203260211137_OrderCardIdLong.cs" />
+    <Compile Include="Migrations\202203260211137_OrderCardIdLong.Designer.cs">
+      <DependentUpon>202203260211137_OrderCardIdLong.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -743,6 +751,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203181657010_AddedMovieImageUrl.resx">
       <DependentUpon>202203181657010_AddedMovieImageUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203260210125_DeleteOrderCardId.resx">
+      <DependentUpon>202203260210125_DeleteOrderCardId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203260211137_OrderCardIdLong.resx">
+      <DependentUpon>202203260211137_OrderCardIdLong.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

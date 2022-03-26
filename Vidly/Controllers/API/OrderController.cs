@@ -56,7 +56,7 @@ namespace Vidly.Controllers.API
                 //client.Timeout = TimeSpan.FromMilliseconds(100);
                 PaymentResponseObj response;
                 PaymentResponseObj defResponse = new PaymentResponseObj(false, "failed to fetch");
-                PaymentRequestObj obj = new PaymentRequestObj(134245666464, 1600);
+                PaymentRequestObj obj = new PaymentRequestObj(134245666464, 500);
                 var stringPayload = JsonConvert.SerializeObject(obj);
                 var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
                 try
@@ -156,8 +156,8 @@ namespace Vidly.Controllers.API
                  Console.WriteLine(e);
              }
              return Ok(order.Id);
-         }*/
-
+         }
+         */
         [HttpPut]//add auth?
         public IHttpActionResult UpdateOrder(OrderDto orderDto)
         {
@@ -177,6 +177,6 @@ namespace Vidly.Controllers.API
             }
             return Ok(order.Id);
         }
-
+        
     }
 }

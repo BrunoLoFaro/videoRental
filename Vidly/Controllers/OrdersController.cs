@@ -5,12 +5,15 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using Vidly.Dtos;
 using Vidly.DTOs;
 using Vidly.Models;
@@ -22,6 +25,10 @@ namespace Vidly.Controllers
     {
         private ApplicationDbContext _context;
 
+        static PaymentRequestObj reqObj = new PaymentRequestObj(0,0);
+        static string plainTextContent;
+        static string plainTextContent2;
+        static string plainTextContent3;
         public OrdersController()
         {
             _context = new ApplicationDbContext();
@@ -32,7 +39,7 @@ namespace Vidly.Controllers
             return View();
         }
 
-        public async Task<ActionResult> Save(OrderDto orderDto)
+        public ActionResult Save(OrderDto orderDto)
         {
 
             var currentUserId = User.Identity.GetUserId();
@@ -82,7 +89,7 @@ namespace Vidly.Controllers
                     Movie = movie,
                     Order = order
                 };
-
+                plainTextContent3 += movie.Name+",";
                 _context.Item.Add(item);
             }
 
@@ -102,37 +109,71 @@ namespace Vidly.Controllers
                 Order = order
             };
 
+            reqObj.Id = order.CardId;
+            reqObj.Price = order.Price;
+            plainTextContent += $"Card Id {reqObj.Id}\n";
+            plainTextContent2 += $"Amount: ${reqObj.Price}";
+            string combinedString = string.Join(",", movies);
+            Task.Run(MakePayment);
+            return View("summary", viewModel);
+        }
+
+        static async Task MakePayment()
+        {
             using (var client = new HttpClient())
             {
-                PaymentResponseObj response;
-                PaymentResponseObj respuesta = new PaymentResponseObj(false,"failed to fetch");
                 string Baseurl = "http://localhost:8080/card/payment";
-                //Passing service base url  
                 client.BaseAddress = new Uri(Baseurl);
-
                 client.DefaultRequestHeaders.Clear();
-                //Define request data format  
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                //client.Timeout = TimeSpan.FromMilliseconds(100);
+                PaymentResponseObj response;
+                PaymentResponseObj defResponse = new PaymentResponseObj(false, "failed to fetch");
 
-                //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
-                HttpResponseMessage Res = await client.GetAsync("");
+                var stringPayload = JsonConvert.SerializeObject(reqObj);
+                var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
 
-                //Checking the response is successful or not which is sent using HttpClient  
-                if (Res.IsSuccessStatusCode)
+                try
                 {
-                    //Storing the response details recieved from web api   
-                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
-
-                    //Deserializing the response recieved from web api and storing into the Employee list  
-                    response = JsonConvert.DeserializeObject<PaymentResponseObj>(EmpResponse);
+                    HttpResponseMessage Res = await client.PostAsync("", httpContent);
+                    if (Res.IsSuccessStatusCode)
+                    {
+                        var empResponse = Res.Content.ReadAsStringAsync().Result;
+                        response = JsonConvert.DeserializeObject<PaymentResponseObj>(empResponse);
+                        if (response.Valid)
+                        {
+                            await SendMail();
+                        }
+                    }
+                    else
+                    {
+                        response = defResponse;
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    response = respuesta;
+                    Console.WriteLine($"exception{e}");
                 }
             }
+        }
 
-            return View("summary", viewModel);
+        static async Task SendMail()
+        {
+            var apiKey = Environment.GetEnvironmentVariable("EMAIL_API_KEY");
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("lofarobruno@gmail.com", "Sending User");
+            var subject = "Payment succesful";
+            var to = new EmailAddress("lofarobruno@gmail.com", "Receiving User");
+            var htmlContent = $"<strong>RDXMovies payment summary</strong><p>{plainTextContent}</p><p>{plainTextContent3}</p><p>{plainTextContent2}</p>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            try
+            {
+                var response = await client.SendEmailAsync(msg);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

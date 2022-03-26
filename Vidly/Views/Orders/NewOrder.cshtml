@@ -24,7 +24,7 @@
 {
     <div class="form-group">
         @Html.LabelFor(c => c.CardId)
-        @Html.TextBoxFor(c => c.CardId,new{id="cardIdTextBox"})
+        @Html.TextBoxFor(c => c.CardId)
         @Html.ValidationMessageFor(c => c.CardId)
     </div>
 
@@ -37,7 +37,7 @@
 {
     <script>
         function validateCardNumLength() {
-            let num = parseInt($('#cardIdTextBox').val());
+            let num = parseInt($('#CardId').val());
             if (!num)
                 return false;
             if (num.toString().length != 12)
@@ -46,22 +46,32 @@
         }
 
         async function validatePaymentInfo() {
-            let num = parseInt($('#cardIdTextBox').val());
+            let num = parseInt($('#CardId').val());
+            console.log(num);
             cart = JSON.parse(localStorage.getItem("cart"));
             let data = {
                 Id: num,
                 Price: cart.Total
             };
-            const res = await fetch('http://localhost:8080/card/',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-            const resJson = await res.json();
-            return resJson;
+            console.log(data);
+            try {
+                const res = await fetch('http://localhost:8080/card/validation',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                const resJson = await res.json();
+                return resJson;
+            } catch (err) {
+                const resJson = {
+                    valid: false,
+                    error: "cannot verify card"
+                };
+                return resJson;
+            }
         };
 
 
@@ -83,16 +93,19 @@
                 toastr.error('No movies selected.');
                 return false;
             }
+            console.log("movies");
             if (!validateCardNumLength()) {
                 toastr.error('The card id must be numeric 12 digits.');
                 return false;
             }
+            console.log("cardId");
             const res = await validatePaymentInfo();
-
+            console.log(res);
             if (!res.valid) {
                 toastr.error(res.error);
                 return false;
             }
+            console.log("api");
             return true;
         }
 
@@ -100,10 +113,15 @@
             e.preventDefault();
             validation(this)
                 .then(res => {
-                    if (res)
+                    console.log(res);
+                    if (res){
                         emptyCart();
                         this.submit();
+                    }
                 });
+        });
+        $("form :input").change(function() {
+            console.log($(this).closest('form').serialize());
         });
     </script>
 }
