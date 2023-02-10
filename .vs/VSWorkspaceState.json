@@ -1,11 +1,6 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Vidly",
-    "\\Vidly\\App_Start",
-    "\\Vidly\\Views",
-    "\\Vidly\\Views\\Shared"
+    "\\Vidly\\Views"
   ],
-  "SelectedNode": "\\Vidly\\Views\\Shared\\_NavBar.cshtml",
   "PreviewInSolutionExplorer": false
 }
